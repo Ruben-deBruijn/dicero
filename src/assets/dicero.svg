@@ -1,0 +1,8 @@
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 150 60" enable-background="new 0 0 150 60" xml:space="preserve">
+    <line fill="#F2F2F2" stroke="#F2F2F2" stroke-width="0.25" stroke-miterlimit="10" x1="10.474" y1="25.359" x2="10.474" y2="30"/>
+    <line fill="#F2F2F2" stroke="#F2F2F2" stroke-width="0.5" stroke-linecap="round" stroke-miterlimit="10" x1="12.507" y1="23.565" x2="12.507" y2="31.818"/>
+    <line fill="#F2F2F2" stroke="#F2F2F2" stroke-width="0.75" stroke-linecap="round" stroke-miterlimit="10" x1="15.214" y1="21.053" x2="15.214" y2="34.928"/>   
+    <line fill="#F2F2F2" stroke="#F2F2F2" stroke-linecap="round" stroke-miterlimit="10" x1="18.7" y1="18.912" x2="18.511" y2="37.54"/>
+    <text transform="matrix(1.5945 0 0 1 17.6733 37.8225)" fill="#F2F2F2" stroke="#F2F2F2" stroke-width="0.4622" stroke-miterlimit="10" font-family="'TitilliumWeb-Regular'" font-size="28.2354px">Dicero</text>
+</svg>

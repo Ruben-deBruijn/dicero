@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './components';
-
-// Replace this and remove file when CssBaseline is present
-import './index.css';
+import { CssBaseline } from '@material-ui/core';
+import { ThemeProvider } from './providers/Theme.provider';
 
 ReactDOM.render(
-  <App />,
+  <ThemeProvider>
+    <CssBaseline>
+      <App />
+    </CssBaseline>
+  </ThemeProvider>,
   document.getElementById('root')
 );
