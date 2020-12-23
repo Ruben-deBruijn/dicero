@@ -15,6 +15,19 @@ export const createTheme = name => createMuiTheme({
   palette: {
       ...colorsMap[name],
   },
+  overrides:{
+    MuiAccordion: {
+      rounded: {
+        borderRadius: 4,
+        marginBottom: 8,
+      },
+    },
+    MuiListItemIcon: {
+      root: {
+        color: 'unset',
+      },
+    }
+  },
 
   scrollbar: {
     '&::-webkit-scrollbar': {

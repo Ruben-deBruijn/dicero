@@ -1,1 +1,1 @@
-export { default as Topbar } from './Topbar/Topbar';
+export { default as Main } from './Main/Main';
