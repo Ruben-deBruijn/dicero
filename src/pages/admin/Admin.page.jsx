@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
 
 // Icons
 import { ExpandMoreOutlined } from '@material-ui/icons';
 
 // Core
-import { Accordion, AccordionDetails, AccordionSummary, Box, Card, Divider, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Typography } from '@material-ui/core';
 import { ClientForm, UserForm } from '../../components/forms';
 import { Main } from '../../components/layout';
 import { GET_CLIENTS, GET_USERS } from '../../graphql';
+
+// Routing
+import { OVERVIEW_PATH } from '../../routes/paths';
 
 const GetClients = () => {
     const { loading, data } = useQuery(GET_CLIENTS, {
@@ -31,6 +35,18 @@ const GetUsers = () => {
 const AdminPage = () => {
     const { clients, clientsLoading } = GetClients();
     const { users, usersLoading } = GetUsers();
+    const history = useHistory();
+
+    useEffect(() => {
+        let user = {
+            name: localStorage.getItem('user'),
+            password: localStorage.getItem('password')
+        };
+
+        if (user.name !== 'admin' || user.password !== '1234') {
+            history.push(OVERVIEW_PATH);
+        }
+    })
 
     if (clientsLoading || usersLoading) return <p>Loading..</p>
 

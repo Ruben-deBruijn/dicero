@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { Fragment, useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 
 // Icons
 import { FolderOutlined, Menu } from '@material-ui/icons';
@@ -20,8 +20,13 @@ import dicero_logo from '../../../assets/dicero.svg';
 const Topbar = () => {
     const classes = useTopbarStyles();
     const history= useHistory();
+    const location = useLocation();
 
     const [drawer, setDrawer] = useState(false);
+
+    useEffect(() => {
+        setDrawer(false);
+    }, [location])
 
     return (
         <Fragment>
