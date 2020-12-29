@@ -1,17 +1,31 @@
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form';
+import { useSnackbar } from 'notistack';
+import { useMutation } from '@apollo/client';
 
 // Core
 import { Box, Button } from '@material-ui/core';
-import { TextField } from '../fields';
+import { SelectField, TextField } from '../fields';
+
+// GraphQL
+import { CREATE_USER } from '../../graphql';
 
 const UserForm = () => {
     const { handleSubmit, errors, control } = useForm();
+    const { enqueueSnackbar } = useSnackbar();
+
+    const [createUser] = useMutation(CREATE_USER, {
+        onCompleted: data => {
+            console.log(data);
+            enqueueSnackbar(`Nieuwe gebruiker toegevoegd!`, { variant: 'success' });
+        },
+        onError: () => { enqueueSnackbar(`Er ging iets verkeerd!`, { variant: 'error' }); },
+      });
 
     const handleSubmitForm = async values => {
       console.log(values);
 
-    //   await createClient({ variables: { ...values } });
+      await createUser({ variables: { ...values } });
     };
 
     return (
@@ -68,7 +82,8 @@ const UserForm = () => {
                 />
 
                 <Controller
-                    as={TextField}
+                    as={SelectField}
+                    items={['Zorgverlener', 'Administrator']}
                     name="job_title"
                     label="Functie"
                     control={control}

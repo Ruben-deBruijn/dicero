@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
 
 // Core
 import { Topbar } from '../navigation';
@@ -16,12 +17,20 @@ const App = () => {
 
   return (
     <div className={classes.wrapper}>
-      <Topbar />
+      <SnackbarProvider 
+        maxSnack={3}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+        }}
+      >
+        <Topbar />
 
-      <Switch>
-        {ROUTES.map(routeProps => <Route {...routeProps} />)}
-        <Redirect to={OVERVIEW_PATH} />
-      </Switch>
+        <Switch>
+          {ROUTES.map(routeProps => <Route {...routeProps} />)}
+          <Redirect to={OVERVIEW_PATH} />
+        </Switch>
+      </SnackbarProvider>
     </div>
   )
 };

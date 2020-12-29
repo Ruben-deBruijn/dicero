@@ -1,17 +1,31 @@
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useSnackbar } from 'notistack';
+import { useMutation } from '@apollo/client';
 
 // Core
 import { Box, Button } from '@material-ui/core';
 import { TextField } from '../fields';
 
+// GraphQL
+import { CREATE_CLIENT } from '../../graphql';
+
 const ClientForm = () => {
     const { handleSubmit, errors, control } = useForm();
+    const { enqueueSnackbar } = useSnackbar();
+
+    const [createClient] = useMutation(CREATE_CLIENT, {
+        onCompleted: data => {
+            console.log(data);
+            enqueueSnackbar(`Nieuwe cliënt toegevoegd!`, { variant: 'success' });
+        },
+        onError: () => { enqueueSnackbar(`Er ging iets verkeerd!`, { variant: 'error' }); },
+      });
 
     const handleSubmitForm = async values => {
       console.log(values);
 
-    //   await createClient({ variables: { ...values } });
+      await createClient({ variables: { ...values } });
     };
 
     return (
