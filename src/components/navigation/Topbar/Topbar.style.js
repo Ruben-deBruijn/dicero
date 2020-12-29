@@ -11,4 +11,10 @@ export const useTopbarStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.common.white,
         boxShadow: theme.shadows[2],
     },
+
+    logo: {
+        '&:hover': {
+            cursor: 'pointer',
+        },
+    }
 }));

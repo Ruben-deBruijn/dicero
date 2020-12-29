@@ -7,9 +7,5 @@ export const useAppStyles = makeStyles(theme => ({
         width: '100vw',
         display: 'flex',
         flexDirection: 'column',
-        [theme.breakpoints.down('sm')]: {
-            height: '100%',
-            width: '100%',
-        },
     },
 }));

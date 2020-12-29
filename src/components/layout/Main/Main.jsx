@@ -6,7 +6,7 @@ import { Box } from '@material-ui/core';
 
 const Main = ({ children }) => (
 
-    <Box width="100%" height="calc(100vh - 112px)" p={2}>
+    <Box width="100%" height="calc(100% - 112px)" p={2} overflow="auto">
       {children}
     </Box>
 );

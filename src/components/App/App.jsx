@@ -1,10 +1,12 @@
 import React from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 // Core
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@material-ui/core';
-import { ExpandMoreOutlined } from '@material-ui/icons';
-import { Main } from '../layout';
 import { Topbar } from '../navigation';
+
+// Routing
+import { OVERVIEW_PATH } from '../../routes/paths';
+import { ROUTES } from '../../routes/routes';
 
 // Styles
 import { useAppStyles } from './App.style';
@@ -15,50 +17,11 @@ const App = () => {
   return (
     <div className={classes.wrapper}>
       <Topbar />
-      <Main>
-        <Accordion defaultExpanded>
-          <AccordionSummary
-            expandIcon={<ExpandMoreOutlined color="primary" />}
-          >
-            <Typography color="primary">
-              Ochtend
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography variant="body2">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, quod. Modi dicta consequatur ipsa officia non? Sed saepe porro ipsa?
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreOutlined color="primary" />}
-          >
-            <Typography color="primary">
-              Middag
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography variant="body2">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, quod. Modi dicta consequatur ipsa officia non? Sed saepe porro ipsa?
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreOutlined color="primary" />}
-          >
-            <Typography color="primary">
-              Avond
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography variant="body2">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, quod. Modi dicta consequatur ipsa officia non? Sed saepe porro ipsa?
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-      </Main>
+
+      <Switch>
+        {ROUTES.map(routeProps => <Route {...routeProps} />)}
+        <Redirect to={OVERVIEW_PATH} />
+      </Switch>
     </div>
   )
 };
