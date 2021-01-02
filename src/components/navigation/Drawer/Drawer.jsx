@@ -5,7 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
 
 // Icons
-import { AddOutlined, CalendarToday, Close, FolderOutlined, Security } from '@material-ui/icons';
+import { AddOutlined, CalendarToday, Close, FolderOutlined, ListOutlined, Security } from '@material-ui/icons';
 
 // Core
 import { 
@@ -23,7 +23,7 @@ import {
 import { TextField } from '../../fields';
 
 // Routing
-import { ADMIN_PATH } from '../../../routes/paths';
+import { ADMIN_PATH, CLIENT_LIST_PATH, DOSSIER_LIST_PATH, OVERVIEW_PATH } from '../../../routes/paths';
 
 // Styles
 import { useDrawerStyles } from './Drawer.style';
@@ -37,7 +37,7 @@ const Drawer = ({ isOpen, handleClose}) => {
 
   const [openDialog, setDialogOpen] = useState(false);
 
-  const handleDrawer = () => {
+  const onAdminClick = () => {
       if (!localStorage.getItem('user') && !localStorage.getItem('password')) {
           setDialogOpen(true)
       } else {
@@ -63,21 +63,27 @@ const Drawer = ({ isOpen, handleClose}) => {
                 <Close />
             </IconButton>
 
-            <Box p={2} mt={6} display="flex" flexDirection="column" justifyContent="space-between" height="100%" minWidth={300}>
+            <Box pt={2} mt={6} display="flex" flexDirection="column" justifyContent="space-between" height="100%" minWidth={300}>
                 <List>
+                    <ListItem button className={classes.listItem} onClick={() => history.push(OVERVIEW_PATH)}>
+                        <ListItemIcon color="inherit">
+                            <ListOutlined />
+                        </ListItemIcon>
+                        <ListItemText primary="Overzicht" />
+                    </ListItem>
                     <ListItem button className={classes.listItem}>
                         <ListItemIcon color="inherit">
                             <AddOutlined />
                         </ListItemIcon>
                         <ListItemText primary="Nieuw Dossier" />
                     </ListItem>
-                    <ListItem button className={classes.listItem}>
+                    <ListItem button className={classes.listItem} onClick={() => history.push(CLIENT_LIST_PATH)}>
                         <ListItemIcon>
                             <FolderOutlined />
                         </ListItemIcon>
                         <ListItemText primary="Cliëntenoverzicht" />
                     </ListItem>
-                    <ListItem button className={classes.listItem}>
+                    <ListItem button className={classes.listItem} onClick={() => history.push(DOSSIER_LIST_PATH)}>
                         <ListItemIcon>
                             <CalendarToday />
                         </ListItemIcon>
@@ -85,8 +91,8 @@ const Drawer = ({ isOpen, handleClose}) => {
                     </ListItem>
                 </List>
                 {history.location.pathname !== '/admin' && (
-                    <List>
-                        <ListItem button className={classes.listItem} onClick={handleDrawer}>
+                    <List disablePadding>
+                        <ListItem button className={classes.listItem} onClick={onAdminClick}>
                             <ListItemIcon>
                                 <Security />
                             </ListItemIcon>

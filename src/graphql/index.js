@@ -1,6 +1,6 @@
 // Client
 export { CREATE_CLIENT } from './clients/Client.mutations';
-export { GET_CLIENTS } from './clients/Client.queries';
+export { GET_CLIENTS, GET_CLIENT } from './clients/Client.queries';
 
 // User
 export { CREATE_USER } from './users/User.mutations';

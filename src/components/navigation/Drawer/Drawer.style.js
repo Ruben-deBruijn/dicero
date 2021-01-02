@@ -1,15 +1,16 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, fade } from '@material-ui/core/styles';
 
 export const useDrawerStyles = makeStyles(theme => ({
     drawerPaper: {
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: fade(theme.palette.primary.main, 0.9),
         color: theme.palette.common.white,
     },
 
     listItem: {
         color: theme.palette.common.white,
-        borderBottom: `2px solid ${theme.palette.secondary.main}`,
-        paddingLeft: 0,
+        '&:hover': {
+            backgroundColor: theme.palette.secondary.main,
+        },
     },
 
     closeButton: {
@@ -18,5 +19,8 @@ export const useDrawerStyles = makeStyles(theme => ({
         padding: theme.spacing(2),
         top: 0,
         left: 0,
+        '&:hover': {
+            backgroundColor: theme.palette.secondary.main,
+        },
     },
 }));

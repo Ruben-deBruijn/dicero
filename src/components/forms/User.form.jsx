@@ -9,6 +9,7 @@ import { SelectField, TextField } from '../fields';
 
 // GraphQL
 import { CREATE_USER } from '../../graphql';
+import { JOB_TITLES } from '../../constants/general.const';
 
 const UserForm = () => {
     const { handleSubmit, errors, control } = useForm();
@@ -83,7 +84,7 @@ const UserForm = () => {
 
                 <Controller
                     as={SelectField}
-                    items={['Zorgverlener', 'Administrator']}
+                    items={JOB_TITLES}
                     name="job_title"
                     label="Functie"
                     control={control}

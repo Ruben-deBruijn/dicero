@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 // Icons
-import { FolderOutlined, Menu } from '@material-ui/icons';
+import { AddOutlined, CalendarToday, Close, FolderOutlined, Security, Menu, List } from '@material-ui/icons';
 
 // Core
 import { AppBar, Box, IconButton, Toolbar, Typography } from '@material-ui/core';
@@ -23,10 +23,30 @@ const Topbar = () => {
     const location = useLocation();
 
     const [drawer, setDrawer] = useState(false);
+    const [subbarTitle, setSubbarTitle] = useState({ label: '', icon: null });
 
     useEffect(() => {
         setDrawer(false);
     }, [location])
+
+    useEffect(() => {
+        switch (location.pathname) {
+            case '/overview':
+                setSubbarTitle({ label: 'Overzicht', icon: <List color="primary" fontSize="small" /> })
+                break;
+            case '/admin':
+                setSubbarTitle({ label: 'Adminstratie', icon: <Security color="primary" fontSize="small" /> })
+                 break;
+            case '/client-list':
+                setSubbarTitle({ label: 'Cliëntenoverzicht', icon: <FolderOutlined color="primary" fontSize="small" /> })
+                break;
+            case '/dossier-list':
+                setSubbarTitle({ label: 'Dossieroverzicht', icon: <CalendarToday color="primary" fontSize="small" /> })
+                break;
+            default:
+                break;
+        }
+    }, [location.pathname]);
 
     return (
         <Fragment>
@@ -43,9 +63,9 @@ const Topbar = () => {
                     </Toolbar>
                 </AppBar>
                 <Toolbar className={classes.subbar} >
-                    <FolderOutlined color="primary" style={{ marginRight: 8}} />
-                    <Typography color="primary">
-                        Overzicht
+                    {subbarTitle.icon}
+                    <Typography color="primary" style={{ marginLeft: 8}}>
+                        {subbarTitle.label}
                     </Typography>
                 </Toolbar>
             </Box>

@@ -18,4 +18,14 @@ export const ROUTES = [
     path: Paths.ADMIN_PATH,
     render: props => <Pages.AdminPage {...props} />,
   },
+  {
+    key: Paths.CLIENT_LIST_PATH,
+    path: Paths.CLIENT_LIST_PATH,
+    render: props => <Pages.ClientListPage {...props} />,
+  },
+  {
+    key: Paths.DOSSIER_LIST_PATH,
+    path: Paths.DOSSIER_LIST_PATH,
+    render: props => <Pages.DossierListPage {...props} />,
+  },
 ];
