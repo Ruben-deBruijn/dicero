@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { ExpandMoreOutlined } from '@material-ui/icons';
 
 // Core
-import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Box, CircularProgress, Divider, Typography } from '@material-ui/core';
 import { ClientForm, UserForm } from '../../components/forms';
 import { Main } from '../../components/layout';
 import { GET_CLIENTS, GET_USERS } from '../../graphql';
@@ -48,7 +48,7 @@ const AdminPage = () => {
         }
     })
 
-    if (clientsLoading || usersLoading) return <p>Loading..</p>
+    if (clientsLoading || usersLoading) return <Box display="flex" justifyContent="center" alignItems="center" height="100%" ><CircularProgress color="secondary" /></Box>;
 
     return (
         <Main>
