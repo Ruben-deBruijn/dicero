@@ -23,7 +23,7 @@ import {
 import { TextField } from '../../fields';
 
 // Routing
-import { ADMIN_PATH, CLIENT_LIST_PATH, DOSSIER_LIST_PATH, OVERVIEW_PATH } from '../../../routes/paths';
+import { ADMIN_PATH, CLIENT_LIST_PATH, CREATE_DOSSIER_PATH, DOSSIER_LIST_PATH, OVERVIEW_PATH } from '../../../routes/paths';
 
 // Styles
 import { useDrawerStyles } from './Drawer.style';
@@ -71,7 +71,7 @@ const Drawer = ({ isOpen, handleClose}) => {
                         </ListItemIcon>
                         <ListItemText primary="Overzicht" />
                     </ListItem>
-                    <ListItem button className={classes.listItem}>
+                    <ListItem button className={classes.listItem} onClick={() => history.push(CREATE_DOSSIER_PATH)}>
                         <ListItemIcon color="inherit">
                             <AddOutlined />
                         </ListItemIcon>

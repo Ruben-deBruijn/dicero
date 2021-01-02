@@ -28,4 +28,9 @@ export const ROUTES = [
     path: Paths.DOSSIER_LIST_PATH,
     render: props => <Pages.DossierListPage {...props} />,
   },
+  {
+    key: Paths.CREATE_DOSSIER_PATH,
+    path: Paths.CREATE_DOSSIER_PATH,
+    render: props => <Pages.CreateDossierPage {...props} />,
+  },
 ];

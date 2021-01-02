@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 // Icons
-import { AddOutlined, CalendarToday, Close, FolderOutlined, Security, Menu, List } from '@material-ui/icons';
+import { AddOutlined, CalendarToday, FolderOutlined, Security, Menu, List } from '@material-ui/icons';
 
 // Core
 import { AppBar, Box, IconButton, Toolbar, Typography } from '@material-ui/core';
@@ -42,6 +42,9 @@ const Topbar = () => {
                 break;
             case '/dossier-list':
                 setSubbarTitle({ label: 'Dossieroverzicht', icon: <CalendarToday color="primary" fontSize="small" /> })
+                break;
+            case '/create-dossier':
+                setSubbarTitle({ label: 'Nieuw dossier', icon: <AddOutlined color="primary" fontSize="small" /> })
                 break;
             default:
                 break;
