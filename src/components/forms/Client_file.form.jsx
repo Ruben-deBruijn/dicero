@@ -16,7 +16,7 @@ import { SHIFTS } from '../../constants/general.const';
 // import { CREATE_CLIENT_FILE } from '../../graphql';
 
 const ClientFileForm = ({ clients }) => {
-    const { handleSubmit, errors, control } = useForm();
+    const { handleSubmit, errors, control, watch } = useForm();
     // const { enqueueSnackbar } = useSnackbar();
 
     // const [createClient] = useMutation(CREATE_CLIENT, {
@@ -35,6 +35,8 @@ const ClientFileForm = ({ clients }) => {
 
     const clientValues = clients;
     const observations = [];
+    const selectedClient = watch('client');
+
     return (
         <form onSubmit={handleSubmit(handleSubmitForm)}>
             <Box borderRadius={4} bgcolor="#fff" p={2}>

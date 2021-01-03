@@ -28,19 +28,13 @@ const DetailView = ({ id, type }) => {
             {client && (
             <Box>
                 <Typography color="primary" gutterBottom>
-                    {client.name}
+                   {`${client.first_name} ${client.last_name}`}
                 </Typography>
                 <Typography variant="body2">
-                    {client.email}
+                    {client.birthday}
                 </Typography>
                 <Typography variant="body2">
-                    {client.address}
-                </Typography>
-                <Typography variant="body2">
-                    {client.postal_code}
-                </Typography>
-                <Typography variant="body2">
-                    {client.city}
+                    {client.contact_person}
                 </Typography>
             </Box>
             )}

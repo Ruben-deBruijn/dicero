@@ -33,7 +33,7 @@ const ClientListPage = () => {
                 {clients.map(client => (
                     <ListItem key={client.id}>
                         <ListItemText 
-                            primary={client.name}
+                            primary={`${client.first_name} ${client.last_name}`}
                             primaryTypographyProps={{
                                 color: 'primary'
                             }}

@@ -18,7 +18,8 @@ import {
     List, 
     ListItem, 
     ListItemIcon, 
-    ListItemText 
+    ListItemText, 
+    Typography
 } from '@material-ui/core';
 import { TextField } from '../../fields';
 
@@ -96,7 +97,7 @@ const Drawer = ({ isOpen, handleClose}) => {
                             <ListItemIcon>
                                 <Security />
                             </ListItemIcon>
-                            <ListItemText primary="Admin panel" />
+                            <ListItemText primary="Administratie" />
                         </ListItem>
                     </List>
                 )}
@@ -105,30 +106,33 @@ const Drawer = ({ isOpen, handleClose}) => {
 
         <Dialog open={openDialog}>
             <DialogContent>
+                <Typography color="primary" gutterBottom>
+                    Authenticatie
+                </Typography>
                 <form onSubmit={handleSubmit(handleFormSubmit)}>
-                <Controller
-                    control={control}
-                    as={TextField} 
-                    label="Gebruiker"
-                    name="user"
-                    fullWidth
-                />
+                    <Controller
+                        control={control}
+                        as={TextField} 
+                        label="Gebruiker"
+                        name="user"
+                        fullWidth
+                    />
 
-                <Controller
-                    control={control}
-                    as={TextField} 
-                    label="Wachtwoord"
-                    name="password"
-                    fullWidth
-                />
-                <Box display="flex" justifyContent="space-between">
-                    <Button variant="contained" color="secondary" type="submit">
-                        Bevestigen
-                    </Button>
-                    <Button variant="outlined" color="primary" onClick={() => setDialogOpen(false)}>
-                        Sluiten
-                    </Button>
-                </Box>
+                    <Controller
+                        control={control}
+                        as={TextField} 
+                        label="Wachtwoord"
+                        name="password"
+                        fullWidth
+                    />
+                    <Box display="flex" justifyContent="space-between" py={2}>
+                        <Button variant="contained" color="primary" type="submit">
+                            Bevestigen
+                        </Button>
+                        <Button variant="outlined" color="primary" onClick={() => setDialogOpen(false)}>
+                            Sluiten
+                        </Button>
+                    </Box>
                 </form>
             </DialogContent>
         </Dialog>

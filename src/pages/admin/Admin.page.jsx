@@ -85,10 +85,10 @@ const AdminPage = () => {
                 {clients.map(client => (
                     <Box key={client.id} my={1.5}>
                         <Typography color="primary">
-                          {client.name}
+                          {`${client.first_name} ${client.last_name}`}
                         </Typography>
                         <Typography variant="body2">
-                          {client.email}
+                          {client.birthday}
                         </Typography>
                     </Box>
                 ))}

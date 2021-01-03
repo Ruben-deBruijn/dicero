@@ -5,27 +5,24 @@ import { gql } from '@apollo/client';
  */
 export const CREATE_CLIENT = gql`
   mutation (
-    $name: String!
-    $email: String!
-    $address: String!
-    $city: String!
-    $postal_code: String!
+    $first_name: String!
+    $last_name: String!
+    $birthday: String!
+    $contact_person: String!
     ) {
     addClient(
       client: {
-        name: $name
-        email: $email
-        address: $address
-        city: $city
-        postal_code: $postal_code
+        first_name: $first_name
+        last_name: $last_name
+        birthday: $birthday
+        contact_person: $contact_person
       }
     ) {
-        name
-        email
-        address
-        city
-        postal_code
-  }
+        first_name
+        last_name
+        birthday
+        contact_person
+    }
   }
 `;
 
@@ -33,20 +30,18 @@ export const CREATE_CLIENT = gql`
 export const UPDATE_CLIENT = gql`
   mutation (
     $id: ID!
-    $name: String!
-    $email: String!
-    $address: String!
-    $city: String!
-    $postal_code: String!
+    $first_name: String!
+    $last_name: String!
+    $birthday: String!
+    $contact_person: String!
     ) {
     updateClient(
       id: $id
       client: {
-        name: $name
-        email: $email
-        address: $address
-        city: $city
-        postal_code: $postal_code
+        first_name: $first_name
+        last_name: $last_name
+        birthday: $birthday
+        contact_person: $contact_person
       }
     ) {
       id

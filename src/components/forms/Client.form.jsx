@@ -16,7 +16,6 @@ const ClientForm = () => {
 
     const [createClient] = useMutation(CREATE_CLIENT, {
         onCompleted: data => {
-            console.log(data);
             enqueueSnackbar(`Nieuwe cliënt toegevoegd!`, { variant: 'success' });
         },
         onError: () => { enqueueSnackbar(`Er ging iets verkeerd!`, { variant: 'error' }); },
@@ -33,8 +32,8 @@ const ClientForm = () => {
             <Box>
                 <Controller
                     as={TextField}
-                    name="name"
-                    label="Naam"
+                    name="first_name"
+                    label="Voornaam"
                     control={control}
                     errors={errors}
                     required
@@ -43,8 +42,8 @@ const ClientForm = () => {
 
                 <Controller
                     as={TextField}
-                    name="email"
-                    label="E-mailadres"
+                    name="last_name"
+                    label="Achternaam"
                     control={control}
                     errors={errors}
                     required
@@ -53,8 +52,8 @@ const ClientForm = () => {
 
                 <Controller
                     as={TextField}
-                    name="address"
-                    label="Adres"
+                    name="birthday"
+                    label="Geboortedatum"
                     control={control}
                     errors={errors}
                     required
@@ -63,18 +62,8 @@ const ClientForm = () => {
 
                 <Controller
                     as={TextField}
-                    name="postal_code"
-                    label="Postcode"
-                    control={control}
-                    errors={errors}
-                    required
-                    fullWidth
-                />
-
-                <Controller
-                    as={TextField}
-                    name="city"
-                    label="Stad"
+                    name="contact_person"
+                    label="Contactpersoon"
                     control={control}
                     errors={errors}
                     required

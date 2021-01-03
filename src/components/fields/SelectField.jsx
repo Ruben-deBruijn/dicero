@@ -44,7 +44,7 @@ const SelectField = props => {
             </MenuItem>
             {items.map(item => (
                 <MenuItem key={item.id || item} value={item.id || item}>
-                    {item.name ||  item}
+                    {`${item.first_name} ${item.last_name}` ||  item}
                 </MenuItem>
             ))}
         </MuiSelectField>
