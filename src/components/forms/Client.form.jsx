@@ -81,7 +81,7 @@ const ClientForm = () => {
                     fullWidth
                 />
 
-                <Button type="submit" variant="contained" color="secondary" fullWidth>
+                <Button type="submit" variant="contained" color="primary" fullWidth>
                     Aanmaken
                 </Button>
             </Box>

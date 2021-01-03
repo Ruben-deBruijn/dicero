@@ -53,7 +53,7 @@ const ClientListPage = () => {
                 <DetailView type="client" id={dialog.id} />
             </DialogContent>
             <DialogActions>
-                <Button color="secondary" variant="outlined" onClick={() => setDialog({ open: false })}>
+                <Button color="primary" variant="outlined" onClick={() => setDialog({ open: false })}>
                     Sluiten
                 </Button>
             </DialogActions>

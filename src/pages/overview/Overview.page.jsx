@@ -24,6 +24,7 @@ const OverviewPage = () => {
             </Typography>
             </AccordionDetails>
         </Accordion>
+
         <Accordion>
             <AccordionSummary
                 expandIcon={<ExpandMoreOutlined color="primary" />}
@@ -38,12 +39,28 @@ const OverviewPage = () => {
             </Typography>
             </AccordionDetails>
         </Accordion>
+
         <Accordion>
             <AccordionSummary
                 expandIcon={<ExpandMoreOutlined color="primary" />}
             >
             <Typography color="primary">
                 Avond
+            </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+            <Typography variant="body2">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, quod. Modi dicta consequatur ipsa officia non? Sed saepe porro ipsa?
+            </Typography>
+            </AccordionDetails>
+        </Accordion>
+
+        <Accordion>
+            <AccordionSummary
+                expandIcon={<ExpandMoreOutlined color="primary" />}
+            >
+            <Typography color="primary">
+                Nacht
             </Typography>
             </AccordionSummary>
             <AccordionDetails>

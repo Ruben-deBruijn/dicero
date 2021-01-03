@@ -26,10 +26,10 @@ const SelectField = props => {
     // const errorText = errors && errors[id];
 
     return (
-        <MuiSelectField 
-            style={{ maxHeight: 40, minWidth: 150 }}
+        <MuiSelectField
+            style={{ marginBottom: 16 }}
             {...rest}
-            label={label}
+            placeholder={label}
             value={value ||  ''}
             required={required}
             disabled={disabled}
@@ -37,21 +37,16 @@ const SelectField = props => {
             // error={!!errorText}
             variant="outlined" 
             color="primary"
+            displayEmpty
         >
-            {typeof items ===  'object' ? (
-                Object.values(items).map(item => (
-                    <MenuItem key={item} value={item}>
-                        {item}
-                    </MenuItem>
-                ))
-            ) : 
-            (
-                items.map(item => (
-                    <MenuItem key={item} value={item}>
-                        {item}
-                    </MenuItem>
-                ))
-            )}
+            <MenuItem value="" disabled>
+                Selecteer een {label.toLowerCase()}
+            </MenuItem>
+            {items.map(item => (
+                <MenuItem key={item.id || item} value={item.id || item}>
+                    {item.name ||  item}
+                </MenuItem>
+            ))}
         </MuiSelectField>
     )
 };
