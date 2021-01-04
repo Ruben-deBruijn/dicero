@@ -24,7 +24,13 @@ import {
 import { TextField } from '../../fields';
 
 // Routing
-import { ADMIN_PATH, CLIENT_LIST_PATH, CREATE_DOSSIER_PATH, DOSSIER_LIST_PATH, OVERVIEW_PATH } from '../../../routes/paths';
+import { 
+    ADMIN_PATH, 
+    CLIENT_LIST_PATH, 
+    CREATE_DOSSIER_PATH, 
+    DOSSIER_LIST_PATH, 
+    OVERVIEW_PATH,
+} from '../../../routes/paths';
 
 // Styles
 import { useDrawerStyles } from './Drawer.style';

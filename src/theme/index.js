@@ -26,6 +26,21 @@ export const createTheme = name => createMuiTheme({
       root: {
         color: 'unset',
       },
+    },
+    MuiStepper: {
+      root: {
+        padding: 0,
+        background: 'transparent',
+      },
+    },
+    MuiStep: {
+      horizontal: {
+        padding: 0,
+        color: '#1984A4',
+      },
+      completed: {
+        color: '#00983c',
+      },
     }
   },
 
