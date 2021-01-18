@@ -21,6 +21,8 @@ export const GET_CLIENT_FORM_VALUES = gql`
         id
         first_name
         last_name
+        birthday
+        contact_person
   }
 }
 `;

@@ -82,7 +82,7 @@ const Drawer = ({ isOpen, handleClose}) => {
                         <ListItemIcon color="inherit">
                             <AddOutlined />
                         </ListItemIcon>
-                        <ListItemText primary="Nieuw Dossier" />
+                        <ListItemText primary="Nieuw Observatiedossier" />
                     </ListItem>
                     <ListItem button className={classes.listItem} onClick={() => history.push(CLIENT_LIST_PATH)}>
                         <ListItemIcon>

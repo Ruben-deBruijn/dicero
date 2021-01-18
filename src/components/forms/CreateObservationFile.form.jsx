@@ -13,18 +13,18 @@ import { SelectField } from '../fields';
 import { SHIFTS } from '../../constants/general.const';
 
 // GraphQL
-import { CREATE_CLIENT_FILE } from '../../graphql/clientfile/ClientFile.mutations';
+import { CREATE_OBSERVATION_FILE } from '../../graphql/observation_file/ObservationFile.mutations';
 
-const CreateClientFileForm = ({ clients, handleNext }) => {
+const CreateObservationFileForm = ({ clients, handleNext }) => {
     const { handleSubmit, errors, control } = useForm();
     const { enqueueSnackbar } = useSnackbar();
 
     const clientValues = clients;
 
-    const [createClientFile] = useMutation(CREATE_CLIENT_FILE, {
+    const [createObservationFile] = useMutation(CREATE_OBSERVATION_FILE, {
         onCompleted: data => {
             enqueueSnackbar(`Nieuwe cliënt toegevoegd!`, { variant: 'success' });
-              handleNext(data.addClientFile.id);
+              handleNext(data.addObservationFile.id);
         },
         onError: () => { enqueueSnackbar(`Er ging iets verkeerd!`, { variant: 'error' }); },
       });
@@ -32,7 +32,7 @@ const CreateClientFileForm = ({ clients, handleNext }) => {
     const handleSubmitForm = async values => {
       values.user = values.client;
       values.observations = [];
-      await createClientFile({ variables: { ...values } });
+      await createObservationFile({ variables: { ...values } });
     };
 
     return (
@@ -68,9 +68,9 @@ const CreateClientFileForm = ({ clients, handleNext }) => {
     );
 };
 
-CreateClientFileForm.propTypes = {
+CreateObservationFileForm.propTypes = {
     clients: PropTypes.array.isRequired,
     handleNext: PropTypes.func.isRequired,
 };
 
-export default CreateClientFileForm;
+export default CreateObservationFileForm;

@@ -1,16 +1,17 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useQuery } from '@apollo/client';
+import { Prompt, useHistory, useLocation } from 'react-router-dom';
+
+//Icons
+import { Description, NoteAdd, RecordVoiceOver } from '@material-ui/icons';
 
 // Core
-import { Box, Button, CircularProgress, Step, StepLabel, Stepper } from '@material-ui/core';
+import { Box, CircularProgress, Step, StepLabel, Stepper } from '@material-ui/core';
 import { Main } from '../../components/layout';
+import { CreateObservationFileForm, ObservationForm, OverviewForm } from '../../components/forms';
 
 // GraphQl
 import { GET_CLIENT_FORM_VALUES } from '../../graphql';
-import { CreateClientFileForm, ObservationForm } from '../../components/forms';
-import { Description, NoteAdd, RecordVoiceOver } from '@material-ui/icons';
-import { Prompt, useLocation } from 'react-router-dom';
-import { CREATE_DOSSIER_PATH } from '../../routes/paths';
 
 const GetClientFormValues = () => {
   const { loading, data } = useQuery(GET_CLIENT_FORM_VALUES, {
@@ -23,11 +24,12 @@ const GetClientFormValues = () => {
 
 const CreateDossierPage = () => {
   const location = useLocation();
+  const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = param => {
     if (param) {
-      console.log(param);
+      history.push({ state: { id: param } });
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -53,14 +55,15 @@ const CreateDossierPage = () => {
     },
   ];
 
+
   const getStepContent = stepIndex => {
     switch (stepIndex) {
       case 0:
-        return <CreateClientFileForm clients={clientFormValues} handleNext={handleNext} />;
+        return <CreateObservationFileForm clients={clientFormValues} handleNext={handleNext} />;
       case 1:
         return <ObservationForm handleNext={handleNext} />;
       case 2:
-        return <p>Observaties</p>;
+        return <OverviewForm />;
       default:
         return 'Unknown';
     }
@@ -70,7 +73,8 @@ const CreateDossierPage = () => {
 
   return (
     <Fragment>
-      <Box bgcolor="#fff" m={2} p={2} borderRadius={4}>
+
+      <Main>
         <Stepper activeStep={activeStep} alternativeLabel>
           {createDossierSteps.map((step, index) => (
             <Step key={step.label}>
@@ -84,15 +88,12 @@ const CreateDossierPage = () => {
             </Step>
           ))}
         </Stepper>
-
-          <div>
-            {getStepContent(activeStep)}
-          </div>
-      </Box>
+        {getStepContent(activeStep)}
+      </Main>
 
       <Prompt
         message={promptLocation => {
-          if (promptLocation.pathname !== location.pathname) {
+          if ((promptLocation.pathname !== location.pathname) && activeStep !== 2) {
             return "Weet je zeker dat je de pagina wilt verlaten? Het dossier gaat mogelijk verloren.";
           }
           return null;

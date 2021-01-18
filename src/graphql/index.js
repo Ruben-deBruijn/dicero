@@ -2,8 +2,12 @@
 export { CREATE_CLIENT } from './clients/Client.mutations';
 export { GET_CLIENTS, GET_CLIENT_FORM_VALUES, GET_CLIENT } from './clients/Client.queries';
 
-// Client file
-export { CREATE_CLIENT_FILE } from './clientfile/ClientFile.mutations';
+// Observation file
+export { CREATE_OBSERVATION_FILE, UPDATE_OBSERVATION_FILE } from './observation_file/ObservationFile.mutations';
+export { GET_OBSERVATION_FILE } from './observation_file/ObservationFile.queries';
+
+// Observation
+export { CREATE_OBSERVATION } from './observations/Observation.mutation';
 
 // User
 export { CREATE_USER } from './users/User.mutations';
