@@ -3,53 +3,43 @@ import { Controller, useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
 // Icons
-import { ChevronRight, Mic, RecordVoiceOver } from '@material-ui/icons';
+import { ChevronRight, PostAdd } from '@material-ui/icons';
 
 // Core
-import { Box, Button, Dialog, DialogActions, DialogContent, Divider, Typography } from '@material-ui/core';
+import { Box, Button, Dialog, DialogContent, Divider, IconButton, Typography } from '@material-ui/core';
 import { Dictaphone } from '../../components';
 import { TextField } from '../fields';
 
 // GraphQL
-import { UPDATE_OBSERVATION_FILE, CREATE_OBSERVATION, GET_OBSERVATION_FILE } from '../../graphql';
-
-const GetObservationFile = id => {
-    const { loading, data } = useQuery(GET_OBSERVATION_FILE, {
-        variables: {
-            id,
-        },
-        fetchPolicy: 'cache-and-network',
-    });
-  
-    if (loading) return { loading: true, observationFile: {} };
-    return (data && { loading: false, observationFile: data.getObservationFile }) || [];
-  };
+import { UPDATE_OBSERVATION_FILE, CREATE_OBSERVATION } from '../../graphql';
 
 const ObservationForm = ({ handleNext }) => {
     const location = useLocation();
+    const fileId = location.state && location.state.id;
     const { enqueueSnackbar } = useSnackbar();
-
-    const observationFileId = location.state && location.state.id;
-    const { observationFile, loading } = GetObservationFile(observationFileId);
-
     const { handleSubmit, errors, control, setValue, watch } = useForm({
-        defaultValues: { observation: '' },
+        defaultValues: { note: '' },
     });
-    const observationWatcher = watch('observation');
+    const noteWatcher = watch('note');
 
-    // const [updateObservationFile] = useMutation(UPDATE_OBSERVATION_FILE, {
-    //     onCompleted: data => {
-    //         console.log(data);
-    //         enqueueSnackbar(`Nieuwe cliënt toegevoegd!`, { variant: 'success' });
-    //     },
-    //     onError: () => { enqueueSnackbar(`Er ging iets verkeerd!`, { variant: 'error' }); },
-    //   });
+    const [dialog, setDialog] = useState(false);
+    const [observations, setObservations] = useState([]);
+
+    const getTranscript = transcript => {
+        setValue("note", transcript);
+    };
+
+    const clearTextField = async() => {
+        await setValue("note", '');
+    };
 
     const [addObservation] = useMutation(CREATE_OBSERVATION, {
         onCompleted: data => {
+            const newObservations = observations.concat([data.addObservation]);
+            setObservations(newObservations);
             enqueueSnackbar(`Observatie toegevoegd!`, { variant: 'success' });
         },
         onError: () => { enqueueSnackbar(`Er ging iets verkeerd!`, { variant: 'error' }); },
@@ -58,60 +48,75 @@ const ObservationForm = ({ handleNext }) => {
     const onObservationSubmit = async values => {
         await addObservation({ 
             variables: { 
-                description: values.observation, 
+                description: values.note, 
             },
         });
     };
 
-    const [dialog, setDialog] = useState(false);
+    const [updateObservationFile] = useMutation(UPDATE_OBSERVATION_FILE, {
+        onCompleted: data => {
+            enqueueSnackbar(`Het observatiedossier is geüpdate!`, { variant: 'success' });
+        },
+        onError: () => { enqueueSnackbar(`Er ging iets verkeerd!`, { variant: 'error' }); },
+      });
 
-    const getTranscript = transcript => {
-        setValue("observation", transcript);
-    };
-
-    const clearTextField = async() => {
-        await setValue("observation", '');
-    };
-
-    if (loading) return 'Loading...';
+    const handleUpdateAndNext = async () => {
+        const normalizedObservations = observations.map(item => item.id);
+        await updateObservationFile({
+            variables: {
+                id: fileId,
+                observations: normalizedObservations,
+            }
+        });
+        handleNext();
+    }
 
     return (
         <Fragment>
+            <Box flexDirection="column" justifyContent="space-between" height="inherit">
                 <Box my={2}>
-                    <Box py={4}>
-                        <Typography color="primary" gutterBottom>
+                    <Box py={1} display="flex" justifyContent="space-between" alignItems="center">
+                        <Typography color="primary">
                             Observaties
                         </Typography>
+                        <IconButton
+                            size="small"
+                            color="secondary" 
+                            variant="outlined" 
+                            onClick={() => setDialog(true)}
+                        >
+                            <PostAdd />
+                        </IconButton>
+                    </Box>
 
-                        <Divider />
+                    <Divider />
 
-                        <Box my={2} display="flex" flexDirection="column" alignItems="center">
+                    <Box my={2} display="flex" flexDirection="column" alignItems="center">
+                        {observations && observations.length ? (
+                            observations.map((item, index) => (
+                                <Box key={item.id} display="flex" flexDirection="column" alignItems="flex-start" py={2} width="100%">
+                                    <Typography variant="body2" gutterBottom color="primary">
+                                        {`Observatie ${index + 1}`}
+                                    </Typography>
+                                    <Typography variant="body2">
+                                        {item.description}
+                                    </Typography>
+                                </Box>
+                            ))
+                        ) : (
                             <Typography variant="body2" align="center" paragraph>
                                 Er zijn nog geen observaties toegevoegd
                             </Typography>
-                        </Box>
-
-                        <Divider />
-
-                        <Box my={2}>
-                            <Button
-                                size="small"
-                                color="secondary" 
-                                variant="outlined" 
-                                startIcon={<RecordVoiceOver />} 
-                                onClick={() => setDialog(true)}
-                            >
-                                Nieuwe observatie
-                            </Button>
-                        </Box>
+                        )}
                     </Box>
                 </Box>
-
-                <Box width="100%" display="flex" justifyContent="flex-end">
-                    <Button onClick={handleNext} variant="outlined" color="primary" endIcon={<ChevronRight />}>
+                    
+                <Box width="100%" display="flex" justifyContent="flex-end" py={2}>
+                    <Button onClick={handleUpdateAndNext} variant="outlined" color="primary" endIcon={<ChevronRight />}>
                         Verder
                     </Button>
                 </Box>
+            </Box>
 
             <Dialog open={dialog} maxWidth="md" fullWidth>
                 <DialogContent>
@@ -124,9 +129,9 @@ const ObservationForm = ({ handleNext }) => {
                             <Controller
                                 as={TextField}
                                 fullWidth
-                                // disabled
-                                name="observation"
-                                label="Observatie"
+                                name="note"
+                                disabled={noteWatcher === ''}
+                                label="Notitie"
                                 control={control}
                                 errors={errors}
                                 required
@@ -136,7 +141,7 @@ const ObservationForm = ({ handleNext }) => {
                                     type="submit" 
                                     color="secondary" 
                                     variant="contained"
-                                    disabled={!observationWatcher}
+                                    disabled={!noteWatcher}
                                     onClick={() => setDialog(false)}
                                 >
                                     Opslaan

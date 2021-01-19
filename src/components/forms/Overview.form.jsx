@@ -1,64 +1,74 @@
 import React, { Fragment } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import PropTypes from 'prop-types';
-import { useSnackbar } from 'notistack';
 import { useQuery } from '@apollo/client';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 // Icons
-import { CheckBox, CheckBoxOutlineBlank, ChevronRight } from '@material-ui/icons';
+import { CheckBoxOutlineBlank, ChevronRight } from '@material-ui/icons';
 
 // Core
-import { Box, Button, Checkbox, CircularProgress, Divider, Typography } from '@material-ui/core';
-import { TextField } from '../fields';
+import { Box, Button, CircularProgress, Divider, Typography } from '@material-ui/core';
 
 // GraphQL
 import { GET_OBSERVATION_FILE } from '../../graphql';
+import { CheckboxField } from '../fields';
+import { OVERVIEW_PATH } from '../../routes/paths';
 
 const GetObservationFile = id => {
     const { loading, data } = useQuery(GET_OBSERVATION_FILE, {
-      variables: { id },
-      fetchPolicy: 'cache-and-network',
+        variables: {
+            id,
+        },
+        fetchPolicy: 'cache-and-network',
     });
   
-    if (loading) return { loading: true, observationFile: [] };
+    if (loading) return { loading: true, observationFile: {} };
     return (data && { loading: false, observationFile: data.getObservationFile }) || [];
   };
 
-const OverviewForm = ({ handleNext }) => {
+const OverviewForm = () => {
     const location = useLocation();
-    const { handleSubmit, errors, control } = useForm();
-    const { enqueueSnackbar } = useSnackbar();
+    const history = useHistory();
+    
+    const { handleSubmit, watch, control } = useForm();
+    const confirmationWatcher = watch('confirm');
 
-    // const dossierId = location.search && location.search.slice(1);
-    // const { loading, observationFile } = GetObservationFile(dossierId);
+    const fileId = location.state && location.state.id;
+    const { loading, observationFile } = GetObservationFile(fileId);
+    const { client, user, observations, shift } = observationFile;
 
-    // if (loading) return <Box display="flex" justifyContent="center" alignItems="center" height="100%" ><CircularProgress color="secondary" /></Box>;
+    if (loading) return (
+        <Box display="flex" justifyContent="center" alignItems="center" height="100%" >
+            <CircularProgress color="secondary" />
+        </Box>
+    );
 
-    const handleSubmitForm = async values => {
-        console.log(values);
+    const handleSubmitForm = values => {
+        if (values.confirm) {
+            history.push(OVERVIEW_PATH);
+        }
     };
 
     return (
         <Fragment>
-            {/* <Box py={2}>
+            <Box py={2}>
                 <Typography variant="body2">
                     <b>Naam: </b>
-                    {`${observationFile.client.first_name} ${observationFile.client.last_name}`}
+                    {`${client.first_name} ${client.last_name}`}
                 </Typography>
                 <Typography variant="body2">
                     <b>Geboortedatum: </b>
-                    {observationFile.client.birthday}
+                    {client.birthday}
                 </Typography>
                 <Typography variant="body2">
                     <b>Tijdvak observatie: </b>
-                    {observationFile.shift}
+                    {shift}
                 </Typography>
                 <Typography variant="body2">
                     <b>Zorgverlener: </b>
-                    {observationFile.user && observationFile.user.name || '-'}
+                    {user && user.name || '-'}
                 </Typography>
-            </Box> */}
+            </Box>
 
             <Box py={2}>
                 <form onSubmit={handleSubmit(handleSubmitForm)}>
@@ -68,14 +78,27 @@ const OverviewForm = ({ handleNext }) => {
 
                     <Divider />
 
+                    <Box py={2}>
+                        {observations && observations.map(({ id, description }, index) => (
+                            <Box key={id} display="flex" flexDirection="column" alignItems="flex-start" py={2} width="100%">
+                                <Typography variant="body2" gutterBottom color="primary">
+                                    {`Observatie ${index + 1}`}
+                                </Typography>
+                                <Typography variant="body2">
+                                    {description}
+                                </Typography>
+                            </Box>
+                        ))}
+                    </Box>
+
                     <Box display="flex" py={2} alignItems="center">
                         <Controller
-                            as={Checkbox}
+                            as={CheckboxField}
+                            name="confirm"
                             size="small"
                             icon={<CheckBoxOutlineBlank color="primary" />}
                             color="secondary"
                             control={control}
-                            errors={errors}
                             required
                         />
                         <Typography variant="caption">
@@ -85,7 +108,13 @@ const OverviewForm = ({ handleNext }) => {
 
 
                     <Box width="100%" display="flex" justifyContent="flex-end">
-                        <Button type="submit" variant="outlined" color="primary" endIcon={<ChevronRight />}>
+                        <Button 
+                            disabled={!confirmationWatcher} 
+                            type="submit" 
+                            variant="outlined" 
+                            color="primary" 
+                            endIcon={<ChevronRight />}
+                        >
                             Bevestigen
                         </Button>
                     </Box>
@@ -93,10 +122,6 @@ const OverviewForm = ({ handleNext }) => {
             </Box>
         </Fragment>
     );
-};
-
-OverviewForm.propTypes = {
-    handleNext: PropTypes.func,
 };
 
 export default OverviewForm;

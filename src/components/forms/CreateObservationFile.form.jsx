@@ -3,6 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import { useMutation } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
 
 // Icons
 import { ChevronRight } from '@material-ui/icons';
@@ -16,6 +17,7 @@ import { SHIFTS } from '../../constants/general.const';
 import { CREATE_OBSERVATION_FILE } from '../../graphql/observation_file/ObservationFile.mutations';
 
 const CreateObservationFileForm = ({ clients, handleNext }) => {
+    const history = useHistory();
     const { handleSubmit, errors, control } = useForm();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -24,7 +26,8 @@ const CreateObservationFileForm = ({ clients, handleNext }) => {
     const [createObservationFile] = useMutation(CREATE_OBSERVATION_FILE, {
         onCompleted: data => {
             enqueueSnackbar(`Nieuwe cliënt toegevoegd!`, { variant: 'success' });
-              handleNext(data.addObservationFile.id);
+            history.push({ state: { id: data.addObservationFile.id }})
+            handleNext();
         },
         onError: () => { enqueueSnackbar(`Er ging iets verkeerd!`, { variant: 'error' }); },
       });

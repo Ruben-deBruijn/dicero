@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { Prompt, useHistory, useLocation } from 'react-router-dom';
+import { Prompt, useLocation } from 'react-router-dom';
 
 //Icons
 import { Description, NoteAdd, RecordVoiceOver } from '@material-ui/icons';
@@ -24,13 +24,9 @@ const GetClientFormValues = () => {
 
 const CreateDossierPage = () => {
   const location = useLocation();
-  const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
 
-  const handleNext = param => {
-    if (param) {
-      history.push({ state: { id: param } });
-    }
+  const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -55,7 +51,6 @@ const CreateDossierPage = () => {
     },
   ];
 
-
   const getStepContent = stepIndex => {
     switch (stepIndex) {
       case 0:
@@ -76,7 +71,7 @@ const CreateDossierPage = () => {
 
       <Main>
         <Stepper activeStep={activeStep} alternativeLabel>
-          {createDossierSteps.map((step, index) => (
+          {createDossierSteps.map((step) => (
             <Step key={step.label}>
               <StepLabel
                 disabled
@@ -99,6 +94,11 @@ const CreateDossierPage = () => {
           return null;
         }}
       />
+
+      {window.onbeforeunload = () => (
+          "Weet je zeker dat je de pagina wilt verversen. Er gaan mogelijk gegevens verloren"
+        )
+      }
     </Fragment>
   )
 };

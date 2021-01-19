@@ -24,3 +24,25 @@ export const GET_OBSERVATION_FILE = gql`
         }
     }
 `;
+
+export const GET_OBSERVATION_FILES = gql`
+    query {
+        getObservationFile {
+            id
+            shift
+            observations {
+                id
+                description
+            }
+            client {
+                first_name
+                last_name
+                birthday
+                contact_person
+            }
+            user {
+                name
+            }
+        }
+    }
+`;
