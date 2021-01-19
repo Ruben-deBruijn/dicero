@@ -8,4 +8,18 @@ export const useAppStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
     },
+
+    desktopPlaceholder: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 'inherit',
+    },
+
+    innerPlaceholder: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 }));

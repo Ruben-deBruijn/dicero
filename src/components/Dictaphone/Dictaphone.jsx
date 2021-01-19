@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from'prop-types';
-import { useHistory } from 'react-router-dom';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
 // Icons
@@ -8,24 +7,9 @@ import { Autorenew, Mic, Stop } from '@material-ui/icons'
 
 // Core
 import { Box, IconButton } from '@material-ui/core'
-import { OVERVIEW_PATH } from '../../routes/paths'
 
 const Dictaphone = ({ handleCallback, clearTextField }) => {
-  const history = useHistory();
-
-  const commands = [
-    {
-      command: 'Ga naar overzicht',
-      callback: () => history.push(OVERVIEW_PATH),
-    },
-    {
-      command: 'Open nieuw observatiedossier',
-      callback: () => history.push(OVERVIEW_PATH),
-      isFuzzyMatch: true,
-    },
-  ];
-
-  const { transcript, resetTranscript, listening } = useSpeechRecognition({ commands })
+  const { transcript, resetTranscript, listening } = useSpeechRecognition()
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return null
