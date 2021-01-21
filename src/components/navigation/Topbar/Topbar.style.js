@@ -13,6 +13,7 @@ export const useTopbarStyles = makeStyles(theme => ({
     },
 
     logo: {
+        padding: theme.spacing(1),
         '&:hover': {
             cursor: 'pointer',
         },

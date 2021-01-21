@@ -41,7 +41,28 @@ export const createTheme = name => createMuiTheme({
       completed: {
         color: '#00983c',
       },
-    }
+    },
+    MuiDivider: {
+      root: {
+        backgroundColor: '#1984A4',
+      },
+    },
+    MuiDialog: {
+      paper: {
+        padding: 16,
+      },
+      paperFullWidth: {
+        width: 'calc(100% - 32px)'
+      }
+    },
+    MuiDialogContent: {
+      root: {
+        padding: 0,
+        '&:first-child': {
+          paddingTop: 0,
+        },
+      },
+    },
   },
 
   scrollbar: {

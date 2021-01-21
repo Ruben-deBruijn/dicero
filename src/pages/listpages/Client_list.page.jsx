@@ -2,14 +2,14 @@ import React, { Fragment, useState } from 'react';
 import { useQuery } from '@apollo/client';
 
 // Icons
-import { Search } from '@material-ui/icons';
+import { InfoOutlined, Search } from '@material-ui/icons';
 
 // Core
 import { DetailView, Main } from '../../components/layout';
 
 // GraphQL
 import { GET_CLIENTS } from '../../graphql';
-import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Zoom } from '@material-ui/core';
+import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Zoom } from '@material-ui/core';
 
 const GetClients = () => {
     const { loading, data } = useQuery(GET_CLIENTS, {
@@ -30,25 +30,38 @@ const ClientListPage = () => {
       <Fragment>
         <Main>
             <List>
-                {clients.map(client => (
-                    <ListItem key={client.id}>
-                        <ListItemText 
-                            primary={`${client.first_name} ${client.last_name}`}
-                            primaryTypographyProps={{
-                                color: 'primary'
-                            }}
-                        />
-                        <ListItemSecondaryAction>
-                            <IconButton edge="end" onClick={() => setDialog({ open: true, id: client.id })}>
-                                <Search />
-                            </IconButton>
-                        </ListItemSecondaryAction>
-                    </ListItem>
+                {clients.map((client, index) => (
+                    <Fragment key={client.id}>
+                        <ListItem disableGutters>
+                            <ListItemText 
+                                primary={`${client.first_name} ${client.last_name}`}
+                                primaryTypographyProps={{
+                                    variant: 'body2'
+                                }}
+                            />
+                            <ListItemSecondaryAction>
+                                <IconButton color="primary" edge="end" onClick={() => setDialog({ open: true, id: client.id })}>
+                                    <InfoOutlined />
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        </ListItem>
+                        
+                        {((index + 1 !== clients.length) && (
+                            <Box>
+                                <Divider />
+                            </Box>
+                        ))}
+                    </Fragment>
                 ))}
             </List>
         </Main>
 
-        <Dialog open={dialog.open} fullWidth maxWidth="md" TransitionComponent={Zoom}>
+        <Dialog 
+            open={dialog.open} 
+            fullWidth 
+            maxWidth="xl" 
+            TransitionComponent={Zoom}
+        >
             <DialogContent>
                 <DetailView type="client" id={dialog.id} />
             </DialogContent>

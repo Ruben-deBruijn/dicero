@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 // Icons
-import { AddOutlined, CalendarToday, FolderOutlined, Security, Menu, List } from '@material-ui/icons';
+import { AddOutlined, CalendarToday, FolderOutlined, Security, Menu, List, Hearing } from '@material-ui/icons';
 
 // Core
 import { AppBar, Box, IconButton, Toolbar, Typography } from '@material-ui/core';
@@ -15,7 +15,7 @@ import { OVERVIEW_PATH } from '../../../routes/paths';
 import { useTopbarStyles } from './Topbar.style';
 
 // Assets
-import dicero_logo from '../../../assets/dicero.svg';
+import dicero_logo from '../../../assets/dicero_2.png';
 
 const Topbar = () => {
     const classes = useTopbarStyles();
@@ -59,7 +59,14 @@ const Topbar = () => {
                         className={classes.toolbar}
                         disableGutters 
                     >
-                        <img src={dicero_logo} height="auto" width={120} className={classes.logo} alt="logo" onClick={() => history.push(OVERVIEW_PATH)} />
+                        <Box display="flex" alignItems="center">
+                            <IconButton color="inherit" onClick={() => history.push(OVERVIEW_PATH)}>
+                                <Hearing style={{ marginRight: 4 }} />
+                                <Typography variant="h5">
+                                    Dicero
+                                </Typography>
+                            </IconButton>
+                        </Box>
                         <IconButton color="inherit" onClick={() => setDrawer(true)}>
                             <Menu />
                         </IconButton>

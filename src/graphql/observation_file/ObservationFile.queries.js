@@ -21,13 +21,14 @@ export const GET_OBSERVATION_FILE = gql`
             user {
                 name
             }
+            createdAt
         }
     }
 `;
 
 export const GET_OBSERVATION_FILES = gql`
     query {
-        getObservationFile {
+        getObservationFiles {
             id
             shift
             observations {
@@ -43,6 +44,7 @@ export const GET_OBSERVATION_FILES = gql`
             user {
                 name
             }
+            createdAt
         }
     }
 `;

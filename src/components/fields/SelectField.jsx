@@ -42,17 +42,15 @@ const SelectField = props => {
             <MenuItem value="" disabled>
                 Selecteer een {label.toLowerCase()}
             </MenuItem>
-            {items.map((item, index) => (
-                typeof item === 'object' ? (
-                    <MenuItem key={item.id || item} value={item.id || item}>
-                        {`${item.first_name} ${item.last_name}` ||  item}
-                    </MenuItem>
-                ) :
-                (
-                    <MenuItem key={index} value={item}>
-                        {item}
-                    </MenuItem>
-                )
+            
+            {Object.values(items).map((value, index) => (
+                <MenuItem key={value.id || index} value={value.id || value}>
+                    {value.id ? (
+                        `${value.first_name} ${value.last_name}`
+                    ) : (
+                        value
+                    )}
+                </MenuItem>
             ))}
         </MuiSelectField>
     )

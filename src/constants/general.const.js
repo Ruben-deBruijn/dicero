@@ -3,10 +3,10 @@ export const JOB_TITLES = [
     'Adminstrator'
 ];
 
-export const SHIFTS = [
-    'Ochtend',
-    'Middag',
-    'Avond',
-    'Nacht',
-];
+export const SHIFTS = {
+    morning: 'Ochtend',
+    afternoon: 'Middag',
+    evening: 'Avond',
+    night: 'Nacht',
+};
 
