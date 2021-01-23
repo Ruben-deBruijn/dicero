@@ -27,7 +27,7 @@ const SelectField = props => {
 
     return (
         <MuiSelectField
-            style={{ marginBottom: 16 }}
+            style={{ marginBottom: 16, backgroundColor: '#FFF' }}
             {...rest}
             placeholder={label}
             value={value ||  ''}
@@ -46,7 +46,7 @@ const SelectField = props => {
             {Object.values(items).map((value, index) => (
                 <MenuItem key={value.id || index} value={value.id || value}>
                     {value.id ? (
-                        `${value.first_name} ${value.last_name}`
+                        `${value.first_name || value.name} ${value.last_name || ''}`
                     ) : (
                         value
                     )}

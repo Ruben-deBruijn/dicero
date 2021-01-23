@@ -17,15 +17,12 @@ const UserForm = () => {
 
     const [createUser] = useMutation(CREATE_USER, {
         onCompleted: data => {
-            console.log(data);
             enqueueSnackbar(`Nieuwe gebruiker toegevoegd!`, { variant: 'success' });
         },
         onError: () => { enqueueSnackbar(`Er ging iets verkeerd!`, { variant: 'error' }); },
       });
 
     const handleSubmitForm = async values => {
-      console.log(values);
-
       await createUser({ variables: { ...values } });
     };
 

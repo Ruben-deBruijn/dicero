@@ -16,10 +16,10 @@ export const useDrawerStyles = makeStyles(theme => ({
 
     closeButton: {
         color: 'inherit',
-        position: 'absolute',
+        // position: 'absolute',
         padding: theme.spacing(2),
-        top: 0,
-        left: 0,
+        // top: 0,
+        // left: 0,
         '&:hover': {
             backgroundColor: theme.palette.secondary.main,
         },

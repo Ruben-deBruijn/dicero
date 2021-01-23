@@ -6,6 +6,7 @@ import { ThemeProvider } from './providers/Theme.provider';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { UserProvider } from './providers/User.provider';
 
 const history = createBrowserHistory();
 
@@ -19,7 +20,9 @@ ReactDOM.render(
     <CssBaseline>
       <ApolloProvider client={client}>
         <Router history={history}>
-          <App />
+          <UserProvider>
+            <App />
+          </UserProvider>
         </Router>
       </ApolloProvider>
     </CssBaseline>

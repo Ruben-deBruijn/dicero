@@ -47,8 +47,8 @@ const OverviewPage = () => {
             <CircularProgress color="secondary" />
         </Box>
     );
-
-    if (!observationFiles) return (
+    
+    if (observationFiles.length === 0) return (
         <Box display="flex" justifyContent="center" alignItems="center" height="100%" >
             <Typography>
                 Oeps, er zijn nog geen observatiedossiers!

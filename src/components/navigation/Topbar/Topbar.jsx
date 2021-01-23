@@ -14,9 +14,6 @@ import { OVERVIEW_PATH } from '../../../routes/paths';
 // Styles
 import { useTopbarStyles } from './Topbar.style';
 
-// Assets
-import dicero_logo from '../../../assets/dicero_2.png';
-
 const Topbar = () => {
     const classes = useTopbarStyles();
     const history= useHistory();

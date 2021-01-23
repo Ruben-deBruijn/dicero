@@ -1,5 +1,6 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useQuery } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
@@ -13,6 +14,7 @@ import {
     Button, 
     Dialog, 
     DialogContent, 
+    Divider, 
     Drawer as MuiDrawer, 
     IconButton, 
     List, 
@@ -21,7 +23,11 @@ import {
     ListItemText, 
     Typography
 } from '@material-ui/core';
-import { TextField } from '../../fields';
+import { SelectField, TextField } from '../../fields';
+import { UserContext } from '../../../providers/User.provider';
+
+// GraphQL
+import { GET_USERS } from '../../../graphql';
 
 // Routing
 import { 
@@ -35,12 +41,23 @@ import {
 // Styles
 import { useDrawerStyles } from './Drawer.style';
 
+const GetUsers = () => {
+    const { loading, data } = useQuery(GET_USERS, {
+      fetchPolicy: 'cache-and-network',
+    });
+  
+    if (loading) return { usersLoading: true, users: [] };
+    return (data && { usersLoading: false, users: data.getUsers }) || [];
+};
 
 const Drawer = ({ isOpen, handleClose}) => {
   const classes = useDrawerStyles();
   const history = useHistory();
   const { control, handleSubmit} = useForm();
   const { enqueueSnackbar } = useSnackbar();
+
+  const { setUser, userState } = useContext(UserContext);
+  const { loading, users} = GetUsers();
 
   const [openDialog, setDialogOpen] = useState(false);
 
@@ -51,6 +68,13 @@ const Drawer = ({ isOpen, handleClose}) => {
         history.push(ADMIN_PATH);
       }
   }
+
+  const onUserSelect = values => {
+    const selectedUser = users.filter(user => user.id === values);
+    setUser(selectedUser[0]);
+    handleClose();
+    enqueueSnackbar(`Succesvol gewisseld naar gebruiker ${selectedUser[0].name}`, { variant: 'success' });
+  };
 
   const handleFormSubmit = async values => {
     if (values.user === 'admin' && values.password === '1234') {
@@ -63,14 +87,32 @@ const Drawer = ({ isOpen, handleClose}) => {
     }
   };
 
+  if (loading) return 'Loading';
+
   return (
     <Fragment>
         <MuiDrawer anchor="right" open={isOpen} onClose={handleClose} classes={{ paper: classes.drawerPaper }}>
-            <IconButton onClick={handleClose} className={classes.closeButton}>
-                <Close />
-            </IconButton>
+            <Box pb={4}>
+                <IconButton onClick={handleClose} className={classes.closeButton}>
+                    <Close />
+                </IconButton>
+            </Box>
 
-            <Box pt={2} mt={6} display="flex" flexDirection="column" justifyContent="space-between" height="100%" minWidth={300}>
+            <Box display="flex" mx={2}>
+                <SelectField
+                    fullWidth
+                    label="Gebruiker" 
+                    items={users}
+                    value={(userState && userState.id) || ''}
+                    onChange={event => onUserSelect(event.target.value)}
+                />
+            </Box>
+
+            <Box mx={2} py={2}>
+                <Divider />
+            </Box>
+
+            <Box display="flex" flexDirection="column" justifyContent="space-between" minWidth={300}>
                 <List>
                     <ListItem button className={classes.listItem} onClick={() => history.push(OVERVIEW_PATH)}>
                         <ListItemIcon color="inherit">
@@ -97,6 +139,10 @@ const Drawer = ({ isOpen, handleClose}) => {
                         <ListItemText primary="Dossieroverzicht" />
                     </ListItem>
                 </List>
+
+                <Box mx={2} py={2}>
+                    <Divider />
+                </Box>
                 {history.location.pathname !== '/admin' && (
                     <List disablePadding>
                         <ListItem button className={classes.listItem} onClick={onAdminClick}>

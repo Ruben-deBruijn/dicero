@@ -22,8 +22,6 @@ const ClientForm = () => {
       });
 
     const handleSubmitForm = async values => {
-      console.log(values);
-
       await createClient({ variables: { ...values } });
     };
 
