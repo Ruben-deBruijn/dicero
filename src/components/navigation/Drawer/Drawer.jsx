@@ -103,7 +103,7 @@ const Drawer = ({ isOpen, handleClose}) => {
             </Box>
 
             <Box display="flex" flexDirection="column">
-                <ListItem className={classes.listItem}>
+                <ListItem className={classes.listItem} style={{ pointerEvents: 'none' }}>
                     <ListItemIcon color="inherit">
                         <Person />
                     </ListItemIcon>

@@ -11,7 +11,7 @@ import { UserProvider } from './providers/User.provider';
 const history = createBrowserHistory();
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
+  uri: 'https://dicero-fe.herokuapp.com/graphql' || 'http://localhost:4000/graphql',
   cache: new InMemoryCache(),
 });
 
