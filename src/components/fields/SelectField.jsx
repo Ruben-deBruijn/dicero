@@ -27,7 +27,7 @@ const SelectField = props => {
 
     return (
         <MuiSelectField
-            style={{ marginBottom: 16, backgroundColor: '#FFF' }}
+            style={{ marginBottom: 16 }}
             {...rest}
             placeholder={label}
             value={value ||  ''}

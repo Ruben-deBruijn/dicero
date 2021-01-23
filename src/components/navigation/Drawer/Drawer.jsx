@@ -6,7 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
 
 // Icons
-import { AddOutlined, CalendarToday, Close, FolderOutlined, ListOutlined, Security } from '@material-ui/icons';
+import { AddOutlined, CalendarToday, Close, FolderOutlined, ListOutlined, Person, Security } from '@material-ui/icons';
 
 // Core
 import { 
@@ -92,20 +92,34 @@ const Drawer = ({ isOpen, handleClose}) => {
   return (
     <Fragment>
         <MuiDrawer anchor="right" open={isOpen} onClose={handleClose} classes={{ paper: classes.drawerPaper }}>
-            <Box pb={4}>
+            <div>
                 <IconButton onClick={handleClose} className={classes.closeButton}>
                     <Close />
                 </IconButton>
+            </div>
+
+            <Box mx={2} pt={2} pb={1}>
+                <Divider />
             </Box>
 
-            <Box display="flex" mx={2}>
-                <SelectField
-                    fullWidth
-                    label="Gebruiker" 
-                    items={users}
-                    value={(userState && userState.id) || ''}
-                    onChange={event => onUserSelect(event.target.value)}
-                />
+            <Box display="flex" flexDirection="column">
+                <ListItem className={classes.listItem}>
+                    <ListItemIcon color="inherit">
+                        <Person />
+                    </ListItemIcon>
+                    <ListItemText primary="Gebruiker" />
+                </ListItem>
+                <Box mx={2}>
+                    <SelectField
+                        style={{ backgroundColor: 'rgba(255,255,255, 0.8' }}
+                        margin="dense"
+                        fullWidth
+                        label="Gebruiker" 
+                        items={users}
+                        value={(userState && userState.id) || ''}
+                        onChange={event => onUserSelect(event.target.value)}
+                    />
+                </Box>
             </Box>
 
             <Box mx={2} py={2}>
@@ -153,6 +167,10 @@ const Drawer = ({ isOpen, handleClose}) => {
                         </ListItem>
                     </List>
                 )}
+            </Box>
+
+            <Box mx={2} py={2}>
+                <Divider />
             </Box>
         </MuiDrawer>
 

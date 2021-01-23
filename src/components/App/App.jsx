@@ -4,7 +4,7 @@ import { SnackbarProvider } from 'notistack';
 import { useQuery } from '@apollo/client';
 
 // Icons
-import { DesktopAccessDisabled } from '@material-ui/icons';
+import { DesktopAccessDisabled, InfoOutlined } from '@material-ui/icons';
 
 // Core
 import { Box, Dialog, DialogContent, Hidden, Typography, Zoom } from '@material-ui/core';
@@ -81,11 +81,15 @@ const App = () => {
         TransitionComponent={Zoom}
       >
         <DialogContent>
-          <Typography color="error" align="center">
-            U bent nog niet inglogd
-          </Typography>
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Typography variant="body2" color="primary" align="center">
+              U bent nog niet inglogd
+            </Typography>
+            <InfoOutlined color="primary" />
+          </Box>
           <Box py={3}>
             <SelectField
+                margin="dense"
                 fullWidth
                 label="Gebruiker" 
                 items={users}
