@@ -59,6 +59,7 @@ const SelectField = props => {
 SelectField.propTypes = {
     disabled: PropTypes.bool,
     // errors: PropTypes.object,
+    onChange: PropTypes.func,
     label: PropTypes.string,
     id: PropTypes.string,
     value: PropTypes.any,

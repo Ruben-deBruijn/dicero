@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 // Icons
@@ -6,6 +6,7 @@ import { AddOutlined, CalendarToday, FolderOutlined, Security, Menu, List, Heari
 
 // Core
 import { AppBar, Box, IconButton, Toolbar, Typography } from '@material-ui/core';
+import { UserContext } from '../../../providers/User.provider';
 import Drawer from '../Drawer/Drawer';
 
 // Routing
@@ -18,6 +19,7 @@ const Topbar = () => {
     const classes = useTopbarStyles();
     const history= useHistory();
     const location = useLocation();
+    const { userState } = useContext(UserContext);
 
     const [drawer, setDrawer] = useState(false);
     const [subbarTitle, setSubbarTitle] = useState({ label: '', icon: null });
@@ -77,10 +79,12 @@ const Topbar = () => {
                 </Toolbar>
             </Box>
 
-            <Drawer
-                isOpen={drawer}
-                handleClose={() => setDrawer(false)}
-            />
+            {userState && ( 
+                <Drawer
+                    isOpen={drawer}
+                    handleClose={() => setDrawer(false)}
+                />
+            )}
         </Fragment>
     );
 };

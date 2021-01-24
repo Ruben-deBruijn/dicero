@@ -53,7 +53,7 @@ const GetUsers = () => {
 const Drawer = ({ isOpen, handleClose}) => {
   const classes = useDrawerStyles();
   const history = useHistory();
-  const { control, handleSubmit, setValue, register} = useForm();
+  const { control, handleSubmit, setValue} = useForm();
   const { enqueueSnackbar } = useSnackbar();
 
   const { setUser, userState } = useContext(UserContext);
@@ -61,7 +61,9 @@ const Drawer = ({ isOpen, handleClose}) => {
 
   const [openDialog, setDialogOpen] = useState(false);
 
-  useEffect(() => setValue('user_select', userState), [setUser]);
+  useEffect(() => {
+      setValue('user_select', userState);
+  }, []);
 
   const onAdminClick = () => {
       if (!localStorage.getItem('user') && !localStorage.getItem('password')) {
@@ -113,14 +115,13 @@ const Drawer = ({ isOpen, handleClose}) => {
                 </ListItem>
                 <Box mx={2}>
                     <SelectField
-                        ref={register}
                         name="user_select"
                         style={{ backgroundColor: 'rgba(255,255,255, 0.8' }}
                         margin="dense"
                         fullWidth
                         label="Gebruiker" 
                         items={users}
-                        value={(userState && userState.id) || ''}
+                        value={userState.id || ''}
                         onChange={event => onUserSelect(event.target.value)}
                     />
                 </Box>
