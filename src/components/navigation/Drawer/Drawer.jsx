@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
@@ -53,13 +53,15 @@ const GetUsers = () => {
 const Drawer = ({ isOpen, handleClose}) => {
   const classes = useDrawerStyles();
   const history = useHistory();
-  const { control, handleSubmit} = useForm();
+  const { control, handleSubmit, setValue, register} = useForm();
   const { enqueueSnackbar } = useSnackbar();
 
   const { setUser, userState } = useContext(UserContext);
   const { loading, users} = GetUsers();
 
   const [openDialog, setDialogOpen] = useState(false);
+
+  useEffect(() => setValue('user_select', userState), [setUser]);
 
   const onAdminClick = () => {
       if (!localStorage.getItem('user') && !localStorage.getItem('password')) {
@@ -111,6 +113,8 @@ const Drawer = ({ isOpen, handleClose}) => {
                 </ListItem>
                 <Box mx={2}>
                     <SelectField
+                        ref={register}
+                        name="user_select"
                         style={{ backgroundColor: 'rgba(255,255,255, 0.8' }}
                         margin="dense"
                         fullWidth
@@ -134,7 +138,12 @@ const Drawer = ({ isOpen, handleClose}) => {
                         </ListItemIcon>
                         <ListItemText primary="Overzicht" />
                     </ListItem>
-                    <ListItem button className={classes.listItem} onClick={() => history.push(CREATE_DOSSIER_PATH)}>
+                    <ListItem 
+                        button 
+                        className={classes.listItem} 
+                        onClick={() => history.push(CREATE_DOSSIER_PATH)}
+                        disabled={!userState}
+                    >
                         <ListItemIcon color="inherit">
                             <AddOutlined />
                         </ListItemIcon>

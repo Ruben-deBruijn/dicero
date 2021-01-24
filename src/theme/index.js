@@ -50,6 +50,7 @@ export const createTheme = name => createMuiTheme({
     MuiDialog: {
       paper: {
         padding: 16,
+        margin: 16,
       },
       paperFullWidth: {
         width: 'calc(100% - 32px)'

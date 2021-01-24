@@ -1,13 +1,12 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
 export const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
-
-  const [userState, setUserState] = useState(sessionStorage.getItem('logged_in') || null);;
+  const [userState, setUserState] = useState(JSON.parse(sessionStorage.getItem('user')) || null);;
 
   const setUser = user => {
-    sessionStorage.setItem('logged_in', true);
+    sessionStorage.setItem('user', JSON.stringify(user));
     setUserState(user);
   };
 

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { Prompt, useLocation } from 'react-router-dom';
 
@@ -6,9 +6,10 @@ import { Prompt, useLocation } from 'react-router-dom';
 import { Description, NoteAdd, RecordVoiceOver } from '@material-ui/icons';
 
 // Core
-import { Box, CircularProgress, Step, StepLabel, Stepper } from '@material-ui/core';
+import { Box, CircularProgress, Step, StepLabel, Stepper, Typography } from '@material-ui/core';
 import { Main } from '../../components/layout';
 import { CreateObservationFileForm, ObservationForm, OverviewForm } from '../../components/forms';
+import { UserContext } from '../../providers/User.provider';
 
 // GraphQl
 import { GET_CLIENT_FORM_VALUES } from '../../graphql';
@@ -25,6 +26,7 @@ const GetClientFormValues = () => {
 const CreateDossierPage = () => {
   const location = useLocation();
   const [activeStep, setActiveStep] = useState(0);
+  const { userState } = useContext(UserContext);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -64,7 +66,9 @@ const CreateDossierPage = () => {
     }
   }
 
-  if (loading) return <Box display="flex" justifyContent="center" alignItems="center" height="100%" ><CircularProgress color="secondary" /></Box>;
+  if (loading) return <Box display="flex" justifyContent="center" alignItems="center" height="inherit" ><CircularProgress color="secondary" /></Box>;
+
+  if (!userState) return <Box display="flex" justifyContent="center" alignItems="center" height="inherit" p={2}><Typography variant="body2">Verboden toegang, selecteer eerst een gebruiker</Typography></Box>;
 
   return (
     <Fragment>

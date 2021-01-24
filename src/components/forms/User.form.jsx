@@ -1,22 +1,28 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
 import { useMutation } from '@apollo/client';
+import PropTypes from 'prop-types';
 
 // Core
 import { Box, Button } from '@material-ui/core';
 import { SelectField, TextField } from '../fields';
+import { JOB_TITLES } from '../../constants/general.const';
+import { UserContext } from '../../providers/User.provider';
 
 // GraphQL
 import { CREATE_USER } from '../../graphql';
-import { JOB_TITLES } from '../../constants/general.const';
 
-const UserForm = () => {
+const UserForm = ({ auth }) => {
     const { handleSubmit, errors, control } = useForm();
     const { enqueueSnackbar } = useSnackbar();
+    const { setUser } = useContext(UserContext);
 
     const [createUser] = useMutation(CREATE_USER, {
         onCompleted: data => {
+            if (auth) {
+                setUser(data.addUser);
+            }
             enqueueSnackbar(`Nieuwe gebruiker toegevoegd!`, { variant: 'success' });
         },
         onError: () => { enqueueSnackbar(`Er ging iets verkeerd!`, { variant: 'error' }); },
@@ -88,6 +94,7 @@ const UserForm = () => {
                     errors={errors}
                     required
                     fullWidth
+                    margin="dense"
                 />
 
                 <Button type="submit" variant="contained" color="primary" fullWidth>
@@ -96,6 +103,10 @@ const UserForm = () => {
             </Box>
         </form>
     );
+};
+
+UserForm.propTypes = {
+    auth: PropTypes.bool,
 };
 
 export default UserForm;

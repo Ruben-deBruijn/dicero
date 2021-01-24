@@ -22,6 +22,7 @@ export const CREATE_USER = gql`
         job_title: $job_title
       }
     ) {
+        id
         name
         email
         address

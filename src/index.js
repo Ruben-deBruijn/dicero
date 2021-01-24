@@ -19,11 +19,11 @@ ReactDOM.render(
   <ThemeProvider>
     <CssBaseline>
       <ApolloProvider client={client}>
-        <Router history={history}>
-          <UserProvider>
+        <UserProvider>
+          <Router history={history}>
             <App />
-          </UserProvider>
-        </Router>
+          </Router>
+        </UserProvider>
       </ApolloProvider>
     </CssBaseline>
   </ThemeProvider>,
