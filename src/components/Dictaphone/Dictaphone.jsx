@@ -30,7 +30,7 @@ const Dictaphone = ({ handleCallback, clearTextField }) => {
     clearTextField();
   };
 
-  if (SpeechRecognition.browserSupportsSpeechRecognition()) return (
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) return (
     <Box p={1} display="flex" flexDirection="column">
       <Box display="flex" alignItems="center" pb={1}>
         <Warning fontSize="small" color="error" style={{ marginRight: 8 }} />
