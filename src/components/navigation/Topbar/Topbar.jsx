@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 // Icons
-import { AddOutlined, CalendarToday, FolderOutlined, Security, Menu, List, Hearing } from '@material-ui/icons';
+import { AddOutlined, Security, Menu, List, Hearing, People, Assignment } from '@material-ui/icons';
 
 // Core
 import { AppBar, Box, IconButton, Toolbar, Typography } from '@material-ui/core';
@@ -31,16 +31,16 @@ const Topbar = () => {
     useEffect(() => {
         switch (location.pathname) {
             case '/overview':
-                setSubbarTitle({ label: 'Overzicht', icon: <List color="primary" fontSize="small" /> })
+                setSubbarTitle({ label: 'Algemeen overzicht', icon: <List color="primary" fontSize="small" /> })
                 break;
             case '/admin':
                 setSubbarTitle({ label: 'Adminstratie', icon: <Security color="primary" fontSize="small" /> })
                  break;
             case '/client-list':
-                setSubbarTitle({ label: 'Cliëntenoverzicht', icon: <FolderOutlined color="primary" fontSize="small" /> })
+                setSubbarTitle({ label: 'Cliëntenoverzicht', icon: <People color="primary" fontSize="small" /> })
                 break;
             case '/dossier-list':
-                setSubbarTitle({ label: 'Dossieroverzicht', icon: <CalendarToday color="primary" fontSize="small" /> })
+                setSubbarTitle({ label: 'Dossieroverzicht', icon: <Assignment color="primary" fontSize="small" /> })
                 break;
             case '/create-dossier':
                 setSubbarTitle({ label: 'Nieuw dossier', icon: <AddOutlined color="primary" fontSize="small" /> })

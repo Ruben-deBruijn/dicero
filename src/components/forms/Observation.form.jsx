@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import { useMutation } from '@apollo/client';
+import SpeechRecognition from 'react-speech-recognition';
 
 // Icons
 import { ChevronRight, PostAdd } from '@material-ui/icons';
@@ -94,7 +95,7 @@ const ObservationForm = ({ handleNext }) => {
                     <Box my={2} display="flex" flexDirection="column" alignItems="center">
                         {observations && observations.length ? (
                             observations.map((item, index) => (
-                                <Box key={item.id} display="flex" flexDirection="column" alignItems="flex-start" py={2} width="100%">
+                                <Box key={item.id} display="flex" flexDirection="column" alignItems="flex-start" py={1} width="100%">
                                     <Typography variant="body2" gutterBottom color="primary">
                                         {`Observatie ${index + 1}`}
                                     </Typography>
@@ -104,7 +105,7 @@ const ObservationForm = ({ handleNext }) => {
                                 </Box>
                             ))
                         ) : (
-                            <Typography variant="body2" align="center" paragraph>
+                            <Typography variant="caption" align="center" paragraph>
                                 Er zijn nog geen observaties toegevoegd
                             </Typography>
                         )}
@@ -112,7 +113,14 @@ const ObservationForm = ({ handleNext }) => {
                 </Box>
                     
                 <Box width="100%" display="flex" justifyContent="flex-end" py={2}>
-                    <Button onClick={handleUpdateAndNext} variant="outlined" color="primary" endIcon={<ChevronRight />}>
+                    <Button
+                        onClick={handleUpdateAndNext} 
+                        variant="contained"
+                        disabled={observations.length === 0}
+                        fullWidth
+                        color="primary" 
+                        endIcon={<ChevronRight />}
+                    >
                         Verder
                     </Button>
                 </Box>
@@ -130,13 +138,13 @@ const ObservationForm = ({ handleNext }) => {
                                 as={TextField}
                                 fullWidth
                                 name="note"
-                                disabled={noteWatcher === ''}
+                                disabled={noteWatcher === '' && SpeechRecognition.browserSupportsSpeechRecognition()}
                                 label="Notitie"
                                 control={control}
                                 errors={errors}
                                 required
                             />
-                            <Box display="flex" justifyContent="space-between">
+                            <Box display="flex" justifyContent="space-between" pt={2}>
                                 <Button 
                                     type="submit" 
                                     color="secondary" 

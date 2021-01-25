@@ -4,15 +4,16 @@ import { useQuery } from '@apollo/client';
 import { useHistory, useLocation } from 'react-router-dom';
 
 // Icons
-import { CheckBoxOutlineBlank, ChevronRight } from '@material-ui/icons';
+import { CheckBoxOutlineBlank } from '@material-ui/icons';
 
 // Core
 import { Box, Button, CircularProgress, Divider, Typography } from '@material-ui/core';
+import { CheckboxField } from '../fields';
+import { OVERVIEW_PATH } from '../../routes/paths';
+import ListPair from '../layout/ListPair/ListPair';
 
 // GraphQL
 import { GET_OBSERVATION_FILE } from '../../graphql';
-import { CheckboxField } from '../fields';
-import { OVERVIEW_PATH } from '../../routes/paths';
 
 const GetObservationFile = id => {
     const { loading, data } = useQuery(GET_OBSERVATION_FILE, {
@@ -51,26 +52,36 @@ const OverviewForm = () => {
 
     return (
         <Fragment>
-            <Box py={2}>
-                <Typography variant="body2">
-                    <b>Naam: </b>
-                    {`${client.first_name} ${client.last_name}`}
-                </Typography>
-                <Typography variant="body2">
-                    <b>Geboortedatum: </b>
-                    {client.birthday}
-                </Typography>
-                <Typography variant="body2">
-                    <b>Tijdvak observatie: </b>
-                    {shift}
-                </Typography>
-                <Typography variant="body2">
-                    <b>Zorgverlener: </b>
-                    {user && user.name || '-'}
+            <Box pt={3}>
+                <Typography color="primary" gutterBottom>
+                    Dossiergegevens
                 </Typography>
             </Box>
+            <Divider />
+            <Box py={3}>
+                <ListPair
+                    dense
+                    primary="Cliënt"
+                    secondary={`${client.first_name} ${client.last_name}`}
+                />
+                <ListPair
+                    dense
+                    primary="Geboortedatum"
+                    secondary={client.birthday}
+                />
+                <ListPair
+                    dense
+                    primary="Tijdvak"
+                    secondary={shift}
+                />
+                <ListPair
+                    dense
+                    primary="Zorgverlener"
+                    secondary={user.name}
+                />
+            </Box>
 
-            <Box py={2}>
+            <Box pb={2}>
                 <form onSubmit={handleSubmit(handleSubmitForm)}>
                     <Typography color="primary" gutterBottom>
                         Observaties
@@ -78,7 +89,7 @@ const OverviewForm = () => {
 
                     <Divider />
 
-                    <Box py={2}>
+                    <Box py={3}>
                         {observations && observations.map(({ id, description }, index) => (
                             <Box key={id} display="flex" flexDirection="column" alignItems="flex-start" py={2} width="100%">
                                 <Typography variant="body2" gutterBottom color="primary">
@@ -89,9 +100,14 @@ const OverviewForm = () => {
                                 </Typography>
                             </Box>
                         ))}
+                        {observations.length < 1 && (
+                            <Typography variant="caption" align="center">
+                                Er zijn observaties opgeslagen
+                            </Typography>
+                        )}
                     </Box>
-
-                    <Box display="flex" py={2} alignItems="center">
+                    <Divider/>           
+                    <Box display="flex" py={3} alignItems="center">
                         <Controller
                             as={CheckboxField}
                             name="confirm"
@@ -108,12 +124,12 @@ const OverviewForm = () => {
 
 
                     <Box width="100%" display="flex" justifyContent="flex-end">
-                        <Button 
+                        <Button
+                            fullWidth
                             disabled={!confirmationWatcher} 
                             type="submit" 
-                            variant="outlined" 
+                            variant="contained"
                             color="primary" 
-                            endIcon={<ChevronRight />}
                         >
                             Bevestigen
                         </Button>

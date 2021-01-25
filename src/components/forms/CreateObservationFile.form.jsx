@@ -3,7 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import { useMutation } from '@apollo/client';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 // Icons
 import { ChevronRight } from '@material-ui/icons';
@@ -19,6 +19,7 @@ import { CREATE_OBSERVATION_FILE } from '../../graphql/observation_file/Observat
 
 const CreateObservationFileForm = ({ clients, handleNext }) => {
     const history = useHistory();
+    const location = useLocation();
     const { handleSubmit, errors, control } = useForm();
     const { enqueueSnackbar } = useSnackbar();
     const { userState } = useContext(UserContext);
@@ -27,7 +28,7 @@ const CreateObservationFileForm = ({ clients, handleNext }) => {
 
     const [createObservationFile] = useMutation(CREATE_OBSERVATION_FILE, {
         onCompleted: data => {
-            enqueueSnackbar(`Nieuwe cliënt toegevoegd!`, { variant: 'success' });
+            enqueueSnackbar(`Nieuw observatiedossier aangemaakt!`, { variant: 'success' });
             history.push({ state: { id: data.addObservationFile.id }})
             handleNext();
         },
@@ -44,6 +45,7 @@ const CreateObservationFileForm = ({ clients, handleNext }) => {
         <form onSubmit={handleSubmit(handleSubmitForm)}>
             <Box py={2}>
                 <Controller
+                    margin="dense"
                     as={SelectField}
                     name="client"
                     label="Cliënt"
@@ -55,6 +57,7 @@ const CreateObservationFileForm = ({ clients, handleNext }) => {
                 />
 
                 <Controller
+                    margin="dense"
                     as={SelectField}
                     name="shift"
                     label="Dienst"
@@ -67,7 +70,13 @@ const CreateObservationFileForm = ({ clients, handleNext }) => {
             </Box>
 
             <Box width="100%" display="flex" justifyContent="flex-end">
-                <Button type="submit" variant="outlined" color="primary" endIcon={<ChevronRight />}>
+                <Button 
+                    type="submit"
+                    variant="contained"
+                    fullWidth
+                    color="primary" 
+                    endIcon={<ChevronRight />}
+                >
                     Verder
                 </Button>
             </Box>

@@ -6,7 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
 
 // Icons
-import { AddOutlined, CalendarToday, Close, FolderOutlined, ListOutlined, Person, Security } from '@material-ui/icons';
+import { AddOutlined, Assignment, Close, ListOutlined, People, Person, Security } from '@material-ui/icons';
 
 // Core
 import { 
@@ -137,7 +137,7 @@ const Drawer = ({ isOpen, handleClose}) => {
                         <ListItemIcon color="inherit">
                             <ListOutlined />
                         </ListItemIcon>
-                        <ListItemText primary="Overzicht" />
+                        <ListItemText primary="Algemeen overzicht" />
                     </ListItem>
                     <ListItem 
                         button 
@@ -152,13 +152,13 @@ const Drawer = ({ isOpen, handleClose}) => {
                     </ListItem>
                     <ListItem button className={classes.listItem} onClick={() => history.push(CLIENT_LIST_PATH)}>
                         <ListItemIcon>
-                            <FolderOutlined />
+                            <People />
                         </ListItemIcon>
                         <ListItemText primary="Cliëntenoverzicht" />
                     </ListItem>
                     <ListItem button className={classes.listItem} onClick={() => history.push(DOSSIER_LIST_PATH)}>
                         <ListItemIcon>
-                            <CalendarToday />
+                            <Assignment />
                         </ListItemIcon>
                         <ListItemText primary="Dossieroverzicht" />
                     </ListItem>

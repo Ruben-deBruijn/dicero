@@ -9,7 +9,7 @@ import { DetailView, Main } from '../../components/layout';
 
 // GraphQL
 import { GET_CLIENTS } from '../../graphql';
-import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Zoom } from '@material-ui/core';
+import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography, Zoom } from '@material-ui/core';
 
 const GetClients = () => {
     const { loading, data } = useQuery(GET_CLIENTS, {
@@ -29,6 +29,12 @@ const ClientListPage = () => {
   return (
       <Fragment>
         <Main>
+            <Box pb={1}>
+                <Typography variant="caption">
+                    {`Totaal: ${clients.length}`}
+                </Typography>
+            </Box>
+            <Divider />
             <List>
                 {clients.map((client, index) => (
                     <Fragment key={client.id}>

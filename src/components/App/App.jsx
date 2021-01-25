@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
+import SpeechRecognition from 'react-speech-recognition';
 
 // Icons
 import { DesktopAccessDisabled } from '@material-ui/icons';
@@ -38,7 +39,7 @@ const App = () => {
               <Redirect to={OVERVIEW_PATH} />
             </Switch>
 
-            <Bottombar />
+            {SpeechRecognition.browserSupportsSpeechRecognition && <Bottombar />}
         </Hidden>
 
         <Hidden xsDown>
