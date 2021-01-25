@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Core
 import { 
@@ -18,8 +18,9 @@ import {
 import { ExpandMoreOutlined, InfoOutlined } from '@material-ui/icons';
 import { DetailView, Main } from '../../components/layout';
 import { GET_OBSERVATION_FILES } from '../../graphql/observation_file/ObservationFile.queries';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { GetFilteredDossiers } from '../../helpers/general.helper';
+import { DELETE_OBSERVATION_FILE } from '../../graphql/observation_file/ObservationFile.mutations';
 
 const GetObservationFiles = () => {
     const { loading, data } = useQuery(GET_OBSERVATION_FILES, {
@@ -27,20 +28,43 @@ const GetObservationFiles = () => {
     });
   
     if (loading) return { loading: true, observationFiles: [] };
-    return (data && { loading: false, observationFiles: data.getObservationFiles }) || [];
+    const removeEmpty = data.getObservationFiles.filter(file => file.observations.length === 0);
+    const validFiles = data.getObservationFiles.filter(file => file.observations.length >= 1);
+    return (data && { loading: false, observationFiles: validFiles, trash: removeEmpty }) || [];
 };
 
 const OverviewPage = () => {
-    const { loading, observationFiles } = GetObservationFiles();
+    const { loading, observationFiles, trash } = GetObservationFiles();
     const observationFilesFiltered = observationFiles && GetFilteredDossiers(observationFiles);
     const { morningDossiers, afternoonDossiers, eveningDossiers, nightDossiers } = observationFilesFiltered || {};
     const [dialog, setDialog] = useState({ open: false, dossier: null});
+
     const setDetailView = dossier => {
         setDialog({
             open: true,
             dossier,
         });
     };
+
+    const [deleteObservationFile] = useMutation(DELETE_OBSERVATION_FILE, {
+        onCompleted: data => {
+            console.log(data.deleteObservationFile);
+        },
+        onError: error => { console.log(error); }, 
+    });
+
+    // Not so clean at all, prevents filling DB with useless files
+    useEffect(() => {
+        if (trash && trash.length > 0) {
+            for (let i = 0; i < trash.length; i += 1) {
+                deleteObservationFile({
+                   variables: {
+                       id: trash[i].id,
+                   },
+           });
+           }
+        }
+    }, [trash && trash.length > 0]);
 
     if (loading) return (
         <Box display="flex" justifyContent="center" alignItems="center" height="100%" >

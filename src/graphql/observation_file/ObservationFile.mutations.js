@@ -42,3 +42,11 @@ export const UPDATE_OBSERVATION_FILE = gql`
     }
   }
 `;
+
+export const DELETE_OBSERVATION_FILE = gql`
+  mutation (
+    $id: ID!
+    ) {
+    deleteObservationFile(id: $id)
+  }
+`;

@@ -32,10 +32,6 @@ const CreateDossierPage = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
   const { clientFormValues, loading } = GetClientFormValues();
 
   const createDossierSteps = [
@@ -99,9 +95,9 @@ const CreateDossierPage = () => {
         }}
       />
 
-      {window.onbeforeunload = () => (
-          "Weet je zeker dat je de pagina wilt verversen. Er gaan mogelijk gegevens verloren"
-        )
+      {window.onbeforeunload = () => {
+          return "Weet je zeker dat je de pagina wilt verversen. Er gaan mogelijk gegevens verloren"
+      }
       }
     </Fragment>
   )
