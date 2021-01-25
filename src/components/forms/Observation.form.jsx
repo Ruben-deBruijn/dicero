@@ -7,7 +7,7 @@ import { useMutation } from '@apollo/client';
 import SpeechRecognition from 'react-speech-recognition';
 
 // Icons
-import { ChevronRight, PostAdd } from '@material-ui/icons';
+import { ChevronRight, PostAdd, Warning } from '@material-ui/icons';
 
 // Core
 import { Box, Button, Dialog, DialogContent, Divider, IconButton, Typography } from '@material-ui/core';
@@ -16,6 +16,7 @@ import { TextField } from '../fields';
 
 // GraphQL
 import { UPDATE_OBSERVATION_FILE, CREATE_OBSERVATION } from '../../graphql';
+import { isIOS } from '../../helpers/general.helper';
 
 const ObservationForm = ({ handleNext }) => {
     const location = useLocation();
@@ -129,7 +130,19 @@ const ObservationForm = ({ handleNext }) => {
             <Dialog open={dialog} maxWidth="md" fullWidth>
                 <DialogContent>
                     <Box my={1}>
+                        {SpeechRecognition.browserSupportsSpeechRecognition() && !isIOS() ? (
                         <Dictaphone handleCallback={getTranscript} clearTextField={clearTextField} />
+                        ) : (
+                            <Box p={1} display="flex" flexDirection="column">
+                                <Box display="flex" alignItems="center" pb={1}>
+                                    <Warning fontSize="small" color="error" style={{ marginRight: 8 }} />
+                                    <Typography variant="caption">Let op!</Typography>
+                                </Box>
+                                    <Typography variant="caption">
+                                        Opnames worden niet ondersteund door uw browser, handmatige invoer ingeschakeld.
+                                    </Typography>
+                             </Box>
+                        )}
                     </Box>
                     <Divider />
                     <Box my={2}>
@@ -138,7 +151,7 @@ const ObservationForm = ({ handleNext }) => {
                                 as={TextField}
                                 fullWidth
                                 name="note"
-                                disabled={noteWatcher === '' && SpeechRecognition.browserSupportsSpeechRecognition()}
+                                disabled={noteWatcher === '' && SpeechRecognition.browserSupportsSpeechRecognition() && !isIOS()}
                                 label="Notitie"
                                 control={control}
                                 errors={errors}

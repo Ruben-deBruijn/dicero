@@ -11,6 +11,7 @@ import { Hidden, Typography } from '@material-ui/core';
 import { Topbar } from '../navigation';
 import { Bottombar } from '../../components';
 import DialogWelcome from './DialogWelcome/DialogWelcome';
+import { isIOS } from '../../helpers/general.helper';
 
 // Routing
 import { OVERVIEW_PATH } from '../../routes/paths';
@@ -39,7 +40,7 @@ const App = () => {
               <Redirect to={OVERVIEW_PATH} />
             </Switch>
 
-            {SpeechRecognition.browserSupportsSpeechRecognition && <Bottombar />}
+            {(!isIOS() && SpeechRecognition.browserSupportsSpeechRecognition()) && <Bottombar />}
         </Hidden>
 
         <Hidden xsDown>
