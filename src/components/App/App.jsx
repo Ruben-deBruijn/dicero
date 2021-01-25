@@ -47,7 +47,7 @@ const App = () => {
               <div className={classes.innerPlaceholder}>
                 <DesktopAccessDisabled style={{ fontSize: 80, marginBottom: '16px' }} color="primary" />
                 <Typography color="textPrimary" align="center">
-                  Dicero is currently only available on Mobile devices
+                  De Dicero demo is momenteel alleen beschikbaar op mobiele apparaten
                 </Typography>
               </div>
           </div>
