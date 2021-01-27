@@ -52,9 +52,11 @@ const App = () => {
                 </Typography>
               </div>
           </div>
+          
         </Hidden>
-
-        <DialogWelcome />
+        <Hidden smUp>
+          <DialogWelcome />
+        </Hidden>
       </SnackbarProvider>
     </div>
   )

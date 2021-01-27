@@ -151,6 +151,8 @@ const ObservationForm = ({ handleNext }) => {
                                 as={TextField}
                                 fullWidth
                                 name="note"
+                                multiline
+                                rows={4}
                                 disabled={noteWatcher === '' && SpeechRecognition.browserSupportsSpeechRecognition() && !isIOS()}
                                 label="Notitie"
                                 control={control}

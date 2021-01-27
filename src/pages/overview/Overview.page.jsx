@@ -12,6 +12,7 @@ import {
     DialogActions, 
     DialogContent, 
     IconButton, 
+    Link, 
     Typography, 
     Zoom 
 } from '@material-ui/core';
@@ -74,9 +75,15 @@ const OverviewPage = () => {
     
     if (observationFiles.length === 0) return (
         <Box display="flex" justifyContent="center" alignItems="center" height="100%" >
-            <Typography>
-                Oeps, er zijn nog geen observatiedossiers!
+            <Typography gutterBottom>
+                Er zijn nog geen observatiedossiers
             </Typography>
+            <Link
+                color="secondary"
+                
+            >
+                Start een nieuw observatiedossier
+            </Link>
         </Box>
     );
 

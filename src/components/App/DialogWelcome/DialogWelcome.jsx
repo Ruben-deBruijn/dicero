@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import { useQuery } from '@apollo/client';
 
 // Icons
@@ -75,7 +75,7 @@ const DialogWelcome = () => {
                 <Slide direction="right" in={activeStep === 1} timeout={{ enter: 500 }}>
                     <Box minHeight={300}>
                         <Typography variant="h6" color="primary" paragraph>
-                            Voor je verder gaat
+                            Voordat je verder gaat
                         </Typography>
 
                         <Typography variant="body2" paragraph>
@@ -135,24 +135,31 @@ const DialogWelcome = () => {
                     <Typography variant="h6" color="primary" gutterBottom>
                         Je bent er bijna..
                     </Typography>
-                    <Typography variant="body2" paragraph>
-                        Om verder te gaan, selecteer een gebruiker
-                    </Typography>
+                    {users.length !== 0 && (
+                        <Fragment>
+                            <Typography variant="body2" paragraph>
+                                Om verder te gaan, selecteer je profiel
+                            </Typography>
 
-                    <SelectField
-                        margin="dense"
-                        fullWidth
-                        disabled={users.length === 0}
-                        label="Gebruiker" 
-                        items={users}
-                        value={(userState && userState.id) || ''}
-                        onChange={event => onUserSelect(event.target.value)}
-                    />
-                    <Typography variant="body2" color="primary" style={{ fontWeight: 600 }} gutterBottom>
-                        Nog niet geregistreerd?
-                    </Typography>
+                            <SelectField
+                                margin="dense"
+                                fullWidth
+                                disabled={users.length === 0}
+                                label="Profiel" 
+                                items={users}
+                                value={(userState && userState.id) || ''}
+                                onChange={event => onUserSelect(event.target.value)}
+                            />
+
+                            <Box py={1} pb={2}>
+                                <Typography variant="body2">
+                                    Of
+                                </Typography>
+                            </Box>
+                        </Fragment>
+                    )}
                     <Typography variant="body2">
-                        Maak nu een nieuwe gebruiker aan!
+                        Maak een nieuwe profiel aan
                     </Typography>
 
                     <UserForm auth />

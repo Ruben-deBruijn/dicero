@@ -6,10 +6,12 @@ import { Controller, useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
 
 // Icons
-import { AddOutlined, Assignment, Close, ListOutlined, People, Person, Security } from '@material-ui/icons';
+import { AddOutlined, Assignment, Close, ExitToApp, ListOutlined, People, Person, Security } from '@material-ui/icons';
 
 // Core
 import { 
+    Avatar,
+    Badge,
     Box, 
     Button, 
     Dialog, 
@@ -73,11 +75,10 @@ const Drawer = ({ isOpen, handleClose}) => {
       }
   }
 
-  const onUserSelect = values => {
-    const selectedUser = users.filter(user => user.id === values);
-    setUser(selectedUser[0]);
-    handleClose();
-    enqueueSnackbar(`Succesvol gewisseld naar gebruiker ${selectedUser[0].name}`, { variant: 'success' });
+  const logout = () => {
+    setUser(null);
+    history.push('/')
+    enqueueSnackbar(`Succesvol uitgelogd!`, { variant: 'success' });
   };
 
   const handleFormSubmit = async values => {
@@ -107,24 +108,12 @@ const Drawer = ({ isOpen, handleClose}) => {
             </Box>
 
             <Box display="flex" flexDirection="column">
-                <ListItem className={classes.listItem} style={{ pointerEvents: 'none' }}>
-                    <ListItemIcon color="inherit">
-                        <Person />
-                    </ListItemIcon>
-                    <ListItemText primary="Gebruiker" />
+                <ListItem className={classes.listItem} style={{ pointerEvents: 'none' }} button>
+                    <Avatar alt={userState.name} style={{ marginRight: 16 }}>
+                        {userState.name.charAt(0)}
+                    </Avatar>
+                    <ListItemText primary={userState.name} />
                 </ListItem>
-                <Box mx={2}>
-                    <SelectField
-                        name="user_select"
-                        style={{ backgroundColor: 'rgba(255,255,255, 0.8' }}
-                        margin="dense"
-                        fullWidth
-                        label="Gebruiker" 
-                        items={users}
-                        value={userState.id || ''}
-                        onChange={event => onUserSelect(event.target.value)}
-                    />
-                </Box>
             </Box>
 
             <Box mx={2} py={2}>
@@ -182,6 +171,13 @@ const Drawer = ({ isOpen, handleClose}) => {
             <Box mx={2} py={2}>
                 <Divider />
             </Box>
+
+            <ListItem button className={classes.listItem} onClick={() => logout()}>
+                <ListItemIcon>
+                    <ExitToApp />
+                </ListItemIcon>
+                <ListItemText primary="Uitloggen" />
+            </ListItem>
         </MuiDrawer>
 
         <Dialog open={openDialog}>
