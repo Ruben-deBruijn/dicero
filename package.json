@@ -1,6 +1,6 @@
 {
-  "name": "arj-frontend",
-  "version": "0.1.0",
+  "name": "dicero",
+  "version": "0.15.0",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.3.6",
