@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 // Icons
-import { AddOutlined, Security, Menu, List, Hearing, People, Assignment } from '@material-ui/icons';
+import { AddOutlined, Security, Menu, Hearing, People, Assignment, Today } from '@material-ui/icons';
 
 // Core
 import { AppBar, Box, IconButton, Toolbar, Typography } from '@material-ui/core';
@@ -31,7 +31,7 @@ const Topbar = () => {
     useEffect(() => {
         switch (location.pathname) {
             case '/overview':
-                setSubbarTitle({ label: 'Algemeen overzicht', icon: <List color="primary" fontSize="small" /> })
+                setSubbarTitle({ label: 'Dagoverzicht', icon: <Today color="primary" fontSize="small" /> })
                 break;
             case '/admin':
                 setSubbarTitle({ label: 'Adminstratie', icon: <Security color="primary" fontSize="small" /> })

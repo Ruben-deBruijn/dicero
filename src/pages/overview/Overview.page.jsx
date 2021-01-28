@@ -22,6 +22,7 @@ import { GET_OBSERVATION_FILES } from '../../graphql/observation_file/Observatio
 import { useMutation, useQuery } from '@apollo/client';
 import { GetFilteredDossiers } from '../../helpers/general.helper';
 import { DELETE_OBSERVATION_FILE } from '../../graphql/observation_file/ObservationFile.mutations';
+import { CREATE_DOSSIER_PATH } from '../../routes/paths';
 
 const GetObservationFiles = () => {
     const { loading, data } = useQuery(GET_OBSERVATION_FILES, {
@@ -74,13 +75,15 @@ const OverviewPage = () => {
     );
     
     if (observationFiles.length === 0) return (
-        <Box display="flex" justifyContent="center" alignItems="center" height="100%" >
+        <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" height="calc(100% - 167px)">
             <Typography gutterBottom>
                 Er zijn nog geen observatiedossiers
             </Typography>
             <Link
+                underline="always"
+                component="a"
                 color="secondary"
-                
+                href={CREATE_DOSSIER_PATH}
             >
                 Start een nieuw observatiedossier
             </Link>

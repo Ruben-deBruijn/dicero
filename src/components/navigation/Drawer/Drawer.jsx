@@ -6,12 +6,11 @@ import { Controller, useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
 
 // Icons
-import { AddOutlined, Assignment, Close, ExitToApp, ListOutlined, People, Person, Security } from '@material-ui/icons';
+import { AddOutlined, Assignment, Close, ExitToApp, People, Security, TodayOutlined } from '@material-ui/icons';
 
 // Core
 import { 
     Avatar,
-    Badge,
     Box, 
     Button, 
     Dialog, 
@@ -124,9 +123,9 @@ const Drawer = ({ isOpen, handleClose}) => {
                 <List>
                     <ListItem button className={classes.listItem} onClick={() => history.push(OVERVIEW_PATH)}>
                         <ListItemIcon color="inherit">
-                            <ListOutlined />
+                            <TodayOutlined />
                         </ListItemIcon>
-                        <ListItemText primary="Algemeen overzicht" />
+                        <ListItemText primary="Dagoverzicht" />
                     </ListItem>
                     <ListItem 
                         button 
