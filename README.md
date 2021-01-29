@@ -1,5 +1,13 @@
-# Dicero, speech to text React App
+# Dicero
 
+### Packages
+
+- ReactJS
+- MaterialUI
+- React-hook-form
+- React-router-dom
+- Apollo
+- React-speech-recognition
 
 ### Available Scripts
 
