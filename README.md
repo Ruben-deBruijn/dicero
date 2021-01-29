@@ -1,14 +1,5 @@
 # Dicero
 
-### Packages
-
-- ReactJS
-- MaterialUI
-- React-hook-form
-- React-router-dom
-- Apollo
-- React-speech-recognition
-
 ### Available Scripts
 
 In the project directory, you can run:
@@ -23,4 +14,13 @@ You will also see any lint errors in the console.
 #### `npm run start`
 
 Runs the app in the production mode, hosted by Express.
+
+### Packages
+
+- ReactJS
+- MaterialUI
+- React-hook-form
+- React-router-dom
+- Apollo
+- React-speech-recognition
 
